@@ -1,0 +1,10 @@
+version: 0.0
+os: linux
+hooks:
+  BeforeInstall:
+    - location: requirements
+      timeout: 300
+      runas: root
+    - location: HUV_APP
+      timeout: 300
+      runas: root
