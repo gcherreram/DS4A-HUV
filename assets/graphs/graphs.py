@@ -85,8 +85,8 @@ def demo_graph_generator(year, gender, age):
 def micro_graph_generator(variable):
     
     dfMicro = dfResLab[["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "MICROORGANISMO", "FAMILIA_MICROORGANISMO", "ANTIBIOTICO",
-    "FAMILIA_ANTIBIOTICO","CODIGO DE LA MUESTRA"]].groupby(by=["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "FAMILIA_MICROORGANISMO", 
-    "ANTIBIOTICO", "FAMILIA_ANTIBIOTICO", "MICROORGANISMO"]).count().reset_index()
+    "FAMILIA_ANTIBIOTICO", "GRAM_MICROORGANISMO", "CODIGO DE LA MUESTRA"]].groupby(by=["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", 
+    "FAMILIA_MICROORGANISMO", "ANTIBIOTICO", "FAMILIA_ANTIBIOTICO", "MICROORGANISMO", "GRAM_MICROORGANISMO"]).count().reset_index()
     dfMicro = dfMicro[variable].value_counts().head(20).to_frame().reset_index()
     dfMicro.rename(columns={"index":variable.title(), variable:"Frecuencia"}, inplace=True)
     dfMicro.sort_values(by="Frecuencia", ascending=True, inplace=True)
@@ -99,6 +99,8 @@ def micro_graph_generator(variable):
         micro_title = "Familias de microorganismos más frecuentes en los laboratorios (top 20)"
     elif variable == "FAMILIA_ANTIBIOTICO":
         micro_title = "Familias de antibiotico más frecuentes en los laboratorios (top 20)"
+    elif variable == "GRAM_MICROORGANISMO":
+        micro_title = "Bacterias vs. Hongos"
     else:
         micro_title = "Titulo"
 

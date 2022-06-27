@@ -18,17 +18,9 @@ infections_card = sidecard("Infecciones", "Perfil de los Microorganismos", "/inf
 alerts_card = sidecard("Alertas", "Histórico de Alertas por IAAS", "/alerts")
 earlyalerts_card = sidecard("Alertas Tempranas", "Modelo de Alertas Tempranas", "/modelalerts")
 
-#Generate graphs
-microorganism_graph = micro_graph_generator("MICROORGANISMO")
-antibiotics_graph = micro_graph_generator("ANTIBIOTICO")
-microorganism_family_graph = micro_graph_generator("FAMILIA_MICROORGANISMO")
-
-#Start microorganism graph
-Microorganisms_fig = microorganism_graph
-
 #Generate page content
 content_infections1 = dbc.Container([             
-    dcc.Dropdown(['Microorganismos', 'Familias de Microorganismos', 'Medicamentos'], 
+    dcc.Dropdown(['Microorganismos', 'Familias de Microorganismos', 'Medicamentos', 'Bacteria/Hongo'], 
             "Microorganisms", id='fig2_dropdown', placeholder="Seleccione un gráfica"),
     dcc.Graph(figure=micro_graph_generator("MICROORGANISMO"), id='microorganisms_figure'),                          
 ])
@@ -90,39 +82,26 @@ layout = html.Div([
 ])
 
 #Callbacks
-
+    
 @callback(
     [Output('microorganisms_figure', 'figure')], 
     [Input('fig2_dropdown', 'value')],
-    prevent_initial_call=True)
+    )
 
 def dropdown_interaction(dropdown_val):
 
-    if dropdown_val == 'Microorganismos':
-        return microorganism_graph
-    elif dropdown_val == 'Familias de Microorganismos':
-        return antibiotics_graph
-    else:
-        return microorganism_family_graph
-
-    
-"""@callback(
-    [Output('microorganisms_figure', 'Figure')], 
-    [Input('fig2_dropdown', 'value')],
-    prevent_initial_call=True)
-
-def dropdown_interaction(dropdown_val):
-
-    if dropdown_val == 'Microorganismos':
-        variable = "MICROORGANISMO"
+    if dropdown_val == 'Antibiotico':
+        variable = "ANTIBIOTICO"
     elif dropdown_val == 'Familias de Microorganismos':
         variable = "FAMILIA_MICROORGANISMO"
+    elif dropdown_val == "Bacteria/Hongo":
+        variable = "GRAM_MICROORGANISMO"
     else:
-        variable = "ANTIBIOTICO"
+        variable = "MICROORGANISMO"
 
     figure = micro_graph_generator(variable)
 
-    return figure"""
+    return [figure]
 
 
 @callback(

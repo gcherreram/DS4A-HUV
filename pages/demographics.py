@@ -29,7 +29,6 @@ content_demo1 = dbc.Container([
 ])
 
 content_demo2 = dbc.Container([
-    dbc.Row(html.Span(id="example-output", style={"verticalAlign": "middle"})),
     dbc.Row(dcc.Graph(figure=demographics_fig, id="demographics_fig")),
 ])
 
@@ -47,6 +46,7 @@ layout = html.Div([
             dbc.Row(demographics_card),
             dbc.Row(infections_card),
             dbc.Row(alerts_card),
+            dbc.Row(earlyalerts_card),
             ], width=2),
         dbc.Col([
             dbc.Row(html.H3("Caracterización de los pacientes afectados por IAAS en el HUV", 
@@ -60,39 +60,14 @@ layout = html.Div([
     ),       
 ])
 
-#Callbacks
-@callback(
-    Output("example-output", "children"), [State("year_dropdown", "value"), 
-    State("gender_dropdown", "value"), State("age_dropdown","value"), Input("demographics_button", "n_clicks")], prevent_initial_call=True
-)
-def on_button_click(selector_year, selector_gender, selector_age, n):
-    if selector_gender == "Sin Especificar":
-        selector_gender = "SIN ESPECIFICAR"
-
-    if selector_age == "Todos":
-        selector_age = list(range(0,120,1))
-    elif selector_age == "Menores de 5 años":
-        selector_age = list(range(0,5,1))
-    elif selector_age == "Entre 5 y 17 años":
-        selector_age = list(range(5,18,1))
-    elif selector_age == "Entre 18 y 60 años":
-        selector_age = list(range(18,60,1))
-    else:
-        selector_age = list(range(60,120,1))
-    
-    new_demographics_fig = demo_graph_generator(selector_year, selector_gender, selector_age)
-    if n is not None:
-        return f"Clicked {n} times. {selector_year} {selector_gender} {selector_age} {new_demographics_fig}"
-    else:
-        return "Not clicked."
-        
+#Callbacks      
 @callback(
         [Output("demographics_fig", "figure")], 
         [State("year_dropdown", "value"), 
          State("gender_dropdown","value"),
          State("age_dropdown","value"),
          Input("demographics_button", "n_clicks"),
-        ], prevent_initial_callback=True
+        ]
     )
 
 def update_demographics(selector_year, selector_gender, selector_age, n_clicks):
@@ -112,4 +87,4 @@ def update_demographics(selector_year, selector_gender, selector_age, n_clicks):
 
     if n_clicks is not None:
         new_demographics_fig = demo_graph_generator(selector_year, selector_gender, selector_age)
-    return new_demographics_fig.layout
+    return [new_demographics_fig]
