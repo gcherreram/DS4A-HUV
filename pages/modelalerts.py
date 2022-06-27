@@ -9,8 +9,8 @@ from components.cards.sidecard import sidecard
 from assets.graphs.graphs import demo_graph_generator
 
 #Add alerts to page registry
-register_page(__name__, path="/alerts", name= "Alertas", 
-    title="Dashboard para el monitoreo de IAAS en el HUV - Alertas", order=4)
+register_page(__name__, path="/modelalerts", name= "Modelo Tempranas", 
+    title="Dashboard para el monitoreo de IAAS en el HUV - Alertas Tempranas", order=5)
 
 #Side menu cards
 demographics_card = sidecard("Demografía", "Perfil de los Pacientes", "/demographics")

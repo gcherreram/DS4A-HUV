@@ -24,9 +24,35 @@ dfResLab["EDAD"].value_counts()
 #Year of sample
 dfResLab['AÑO DE TOMA DE MUESTRA'] = dfResLab['FECHA DE TOMA DE MUESTRA'].dt.year
 
-#Grouping microorganisms in families
+#Import dictionary functions
 from data.dictionaries.dictionaryMicro import dictTransform
-dfResLab["FAMILIAS MICROORGANISMOS"] = dictTransform(dfResLab["MICROORGANISMO"])
+from data.dictionaries.dictionaryUnit import dictTransformUnit
+
+#Update microorganism names and add classifications by family, order, fungus/bacteria/gram
+dfResLab["MICROORGANISMO"] = dictTransform(dfResLab["MICROORGANISMO"], "dic_rename_micro")
+#Elimate records of microorganisms that were not precisely identified
+df_eliminate=dfResLab[dfResLab['MICROORGANISMO']=='Eliminar'].index
+dfResLab=dfResLab.drop(df_eliminate)
+dfResLab["BACTERIA_HONGO"] = dictTransform(dfResLab["MICROORGANISMO"], "dic_bacteria_fungus")
+dfResLab['FAMILIA_MICROORGANISMO'] = dictTransform(dfResLab["MICROORGANISMO"], "dic_family_microorganism")
+dfResLab['ORDEN_MICROORGANISMO'] = dictTransform(dfResLab["MICROORGANISMO"], "dic_order_microorganism")
+dfResLab['GRAM_MICROORGANISMO'] = dictTransform(dfResLab["MICROORGANISMO"], "dic_gram_microorganism")
+
+#Update medicament names and add classification by families
+dfResLab['ANTIBIOTICO'] = dictTransform(dfResLab['ANTIBIOTICO'], "dic_rename_antibiotic")
+dfResLab['FAMILIA_ANTIBIOTICO'] = dictTransform(dfResLab['ANTIBIOTICO'], "dic_family_antibiotic")
+dfResLab['TIPO_ANTIBIOTICO'] = dictTransform(dfResLab['ANTIBIOTICO'], "dic_type_antibiotic")
+
+#Standardize hospital units and classify by floor
+dfResLab['SALA'] = dictTransformUnit(dfResLab['SALA'], "dic_rename_unit")
+df_eliminate=dfResLab[dfResLab['SALA']=='eliminar'].index
+dfResLab=dfResLab.drop(df_eliminate)
+dfResLab['PISO'] = dictTransformUnit(dfResLab['SALA'], "dic_floor_unit")
+
+#Simplify resistance level name
+dfResLab["RESISTENCIA"] = dfResLab['SENSIBLE / RESISTENTE / INTERMEDIO']
+dfResLab[dfResLab["RESISTENCIA"]=="SIN ESPECIFICAR"]="X"
+dfResLab[dfResLab["RESISTENCIA"]=="N"]="R"
 
 #Dataframes for demograpichs graphs
 dfDemo = dfResLab[["AÑO DE TOMA DE MUESTRA", "GENERO", "EDAD", "IDENTIFICACION", "FECHA DE TOMA DE MUESTRA", 
@@ -58,9 +84,9 @@ def demo_graph_generator(year, gender, age):
 #Function to generate microorganisms graphs
 def micro_graph_generator(variable):
     
-    dfMicro = dfResLab[["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "MICROORGANISMO", "FAMILIAS MICROORGANISMOS", "ANTIBIOTICO",
-    "CODIGO DE LA MUESTRA"]].groupby(by=["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "FAMILIAS MICROORGANISMOS", "ANTIBIOTICO",
-    "MICROORGANISMO"]).count().reset_index()
+    dfMicro = dfResLab[["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "MICROORGANISMO", "FAMILIA_MICROORGANISMO", "ANTIBIOTICO",
+    "FAMILIA_ANTIBIOTICO","CODIGO DE LA MUESTRA"]].groupby(by=["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "FAMILIA_MICROORGANISMO", 
+    "ANTIBIOTICO", "FAMILIA_ANTIBIOTICO", "MICROORGANISMO"]).count().reset_index()
     dfMicro = dfMicro[variable].value_counts().head(20).to_frame().reset_index()
     dfMicro.rename(columns={"index":variable.title(), variable:"Frecuencia"}, inplace=True)
     dfMicro.sort_values(by="Frecuencia", ascending=True, inplace=True)
@@ -69,8 +95,10 @@ def micro_graph_generator(variable):
         micro_title = "Microorganismos más frecuentes en los laboratorios (top 20)"
     elif variable == "ANTIBIOTICO":
         micro_title = "Antibioticos más utilizados en los laboratorios (top 20)"
-    elif variable == "FAMILIAS MICROORGANISMOS":
+    elif variable == "FAMILIA_MICROORGANISMO":
         micro_title = "Familias de microorganismos más frecuentes en los laboratorios (top 20)"
+    elif variable == "FAMILIA_ANTIBIOTICO":
+        micro_title = "Familias de antibiotico más frecuentes en los laboratorios (top 20)"
     else:
         micro_title = "Titulo"
 
@@ -86,50 +114,11 @@ def micro_graph_generator(variable):
     )
     
     return micro_graph
-"""def micro_graph_generator(variable):
-    micro_title = "Titulo"
-    if variable == "MICROORGANISMO":
-        dfMicro = dfResLab[["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "MICROORGANISMO", 
-        "CODIGO DE LA MUESTRA"]].groupby(by=["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "MICROORGANISMO"]).count().reset_index()
-        dfMicro = dfMicro["MICROORGANISMO"].value_counts().head(20).to_frame().reset_index()
-        dfMicro.rename(columns={"index":"Microorganismo", "MICROORGANISMO":"Frecuencia"}, inplace=True)
-        dfMicro.sort_values(by="Frecuencia", ascending=True, inplace=True)
-        micro_title = "Microorganismos más frecuentes en los laboratorios (top 20)"
-    elif variable == "ANTIBIOTICO":
-        dfMicro = dfResLab[["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "ANTIBIOTICO", 
-        "CODIGO DE LA MUESTRA"]].groupby(by=["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "ANTIBIOTICO"]).count().reset_index()
-        dfMicro = dfMicro["ANTIBIOTICO"].value_counts().head(20).to_frame().reset_index()
-        dfMicro.rename(columns={"index":"Medicamento", "ANTIBIOTICO":"Frecuencia"}, inplace=True)
-        dfMicro.sort_values(by="Frecuencia", ascending=True, inplace=True)
-        micro_title = "Antibioticos más utilizados en los laboratorios (top 20)"
-    elif variable == "FAMILIAs MICROORGANISMOS":
-        dfMicro = dfResLab[["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "FAMILIAs MICROORGANISMO", 
-        "CODIGO DE LA MUESTRA"]].groupby(by=["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "FAMILIAS MICROORGANISMOS"]).count().reset_index()                   
-        dfMicro = dfResLab["FAMILIAS MICROORGANISMOS"].value_counts().head(20).to_frame().reset_index()
-        dfMicro.rename(columns={"index":"Familia de Microorganismos", "FAMILIAS MICROORGANISMOS":"Frecuencia"}, inplace=True)
-        dfMicro.sort_values(by="Frecuencia", ascending=True, inplace=True)
-        micro_title = "Familias de microorganismos más frecuentes en los laboratorios (top 20)"
-    else:
-        dfMicro = dfResLab
-
-    micro_graph = px.bar(
-        dfMicro,
-        y=dfMicro.columns[0],
-        x=dfMicro.columns[1],
-        orientation = "h",   
-    )
-    micro_graph.update_layout(
-        title = micro_title,
-        font = {"size":10} 
-    )
-    
-    return micro_graph"""
-
 
 #Generate dataframes for heatmaps
-dfMicro1 = dfResLab[["AÑO DE TOMA DE MUESTRA", "FAMILIAS MICROORGANISMOS", "SALA", "FECHA DE TOMA DE MUESTRA", "ANTIBIOTICO", 
-"SENSIBLE / RESISTENTE / INTERMEDIO", "CODIGO DE LA MUESTRA"]].groupby(by=["AÑO DE TOMA DE MUESTRA", "FAMILIAS MICROORGANISMOS", "SALA", 
-"FECHA DE TOMA DE MUESTRA", "ANTIBIOTICO", "SENSIBLE / RESISTENTE / INTERMEDIO", "CODIGO DE LA MUESTRA"]).count().reset_index()
+dfMicro1 = dfResLab[["AÑO DE TOMA DE MUESTRA", "FAMILIA_MICROORGANISMO", "SALA", "PISO", "FECHA DE TOMA DE MUESTRA", "ANTIBIOTICO", 
+"FAMILIA_ANTIBIOTICO", "RESISTENCIA", "CODIGO DE LA MUESTRA"]].groupby(by=["AÑO DE TOMA DE MUESTRA", "FAMILIA_MICROORGANISMO", "SALA", 
+"PISO", "FECHA DE TOMA DE MUESTRA", "FAMILIA_ANTIBIOTICO", "ANTIBIOTICO", "RESISTENCIA"]).count().reset_index()
 
 #Function to generate microorganisms heatmaps
 def micro_map_generator(year, variable1, variable2):

@@ -3,12 +3,10 @@ import dash
 from dash import html
 import dash_labs as dl
 import dash_bootstrap_components as dbc
+import pandas as pd
 
-#from callbacks import register_callbacks
-
-#Images
-HUV_logoI = "https://huv.gov.co/wp-content/uploads/2020/06/logo-HU_Horizontal_Blanco.png"
-
+#Own functions
+from components.cards.infocard import infocard
 
 #Create App
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.COSMO], plugins=[dl.plugins.pages],
@@ -34,26 +32,31 @@ navbar = dbc.NavbarSimple(
                         label="Menu",          
                     )
                 ),
-                dbc.Col(dbc.NavItem(html.Img(src=HUV_logoI, height="50px"))),
+                dbc.Col(dbc.NavItem(html.Img(src="assets/images/HospitalLogoHorizontal.png", height="50px"))),
             ]
         )
     ],
-    brand="Dashboard para el monitoreo de IAAS ",
+    brand="Dashboard para el monitoreo de IAAS en el HUV",
     brand_href="#",
     color="primary",
     dark=True,
     class_name="mb-2"
 )
 
+#Branding row
+info_card = infocard("@DS4A Colombia\n Cohort 6\n Team 237", "assets/images/DS4Alogo.png")
+
 #Main layout
 app.layout = dbc.Container(
     [
-        navbar,
-        dl.plugins.page_container,
+        dbc.Row(navbar),
+        dbc.Row(dl.plugins.page_container),
+        dbc.Row(info_card, justify="between")
     ],
     class_name="dbc",
     fluid=True,
 )
+
 
 # Call to external function to register all callbacks
 #register_callbacks(app)
@@ -63,4 +66,4 @@ server = app.server
 
 # Testing server
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=8050, host="0.0.0.0")

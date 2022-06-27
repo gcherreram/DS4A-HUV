@@ -6,7 +6,6 @@ from dash_labs.plugins import register_page
 
 #Own functions
 from components.cards.sidecard import sidecard
-from components.cards.infocard import infocard
 from assets.graphs.graphs import demo_graph_generator
 
 #Add demographics to page registry
@@ -35,10 +34,10 @@ content_demo2 = dbc.Container([
 ])
 
 #Side menu cards
-demographics_card = sidecard("Demografía", "Pacientes afectados por IAAS en el hospital.", "/demographics")
-infections_card = sidecard("Infecciones", "Microorganismos que están causando IAAS en el hospital", "/infections")
-alerts_card = sidecard("Alertas", "Alertas por IAAS", "/alerts")
-info_card = infocard("@DS4A Colombia\n Cohort 6\n Team 237", "/assets/images/DS4Alogo.png")
+demographics_card = sidecard("Demografía", "Perfil de los Pacientes", "/demographics")
+infections_card = sidecard("Infecciones", "Perfil de los Microorganismos", "/infections")
+alerts_card = sidecard("Alertas", "Histórico de Alertas por IAAS", "/alerts")
+earlyalerts_card = sidecard("Alertas Tempranas", "Modelo de Alertas Tempranas", "/modelalerts")
 
 #Define layout
 layout = html.Div([
@@ -58,10 +57,8 @@ layout = html.Div([
             ]),           
             ]),           
         ]
-    ),
-    dbc.Row(info_card, justify="between")    
+    ),       
 ])
-
 
 #Callbacks
 @callback(
@@ -90,7 +87,7 @@ def on_button_click(selector_year, selector_gender, selector_age, n):
         return "Not clicked."
         
 @callback(
-        [Output("demographics_fig", "children")], 
+        [Output("demographics_fig", "figure")], 
         [State("year_dropdown", "value"), 
          State("gender_dropdown","value"),
          State("age_dropdown","value"),
@@ -115,4 +112,4 @@ def update_demographics(selector_year, selector_gender, selector_age, n_clicks):
 
     if n_clicks is not None:
         new_demographics_fig = demo_graph_generator(selector_year, selector_gender, selector_age)
-    return [new_demographics_fig.layout]
+    return new_demographics_fig.layout

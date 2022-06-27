@@ -14,7 +14,7 @@ def sidecard(label, description, href):
                 class_name='m-2',
                 style={"color":"#838383"},
                 )
-            ]
+            ],
             )
         ])
     return card
