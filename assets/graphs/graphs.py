@@ -14,8 +14,7 @@ dfResLab = pd.read_csv("data/databases/RESULTADOS_LAB.csv", on_bad_lines='skip',
 
 #Define time variables
 #Date of birth
-dfResLab['FECHA DE NACIMIENTO'].replace({"SIN DATO":"NaN"}, inplace=True) 
-dfResLab['FECHA DE NACIMIENTO'].unique()
+dfResLab['FECHA DE NACIMIENTO'].replace({"SIN DATO":np.nan}, inplace=True) 
 dfResLab['FECHA DE NACIMIENTO'] = dfResLab['FECHA DE NACIMIENTO'].astype(str)
 dfResLab['FECHA DE NACIMIENTO'] = pd.to_datetime(dfResLab['FECHA DE NACIMIENTO'], dayfirst=True)
 #Date of sample
@@ -23,6 +22,7 @@ dfResLab['FECHA DE TOMA DE MUESTRA'] = pd.to_datetime(dfResLab['FECHA DE TOMA DE
 
 #Create additional features
 #Patients' ages
+dfResLab.sort_values(by="IDENTIFICACION")
 dfResLab["EDAD"] = (dfResLab['FECHA DE TOMA DE MUESTRA'] - dfResLab['FECHA DE NACIMIENTO']).dt.days
 dfResLab["EDAD"] = (dfResLab["EDAD"]/365).round(decimals=0)
 dfResLab["EDAD"].value_counts()
@@ -56,13 +56,11 @@ dfResLab['PISO'] = dictTransformUnit(dfResLab['SALA'], "dic_floor_unit")
 
 #Simplify resistance level name
 dfResLab["RESISTENCIA"] = dfResLab['SENSIBLE / RESISTENTE / INTERMEDIO']
-dfResLab[dfResLab["RESISTENCIA"]=="SIN ESPECIFICAR"]="X"
-dfResLab[dfResLab["RESISTENCIA"]=="N"]="R"
+dfResLab["RESISTENCIA"].rename({"SIN ESPECIFICAR":"X","N":"R"}, axis=0, inplace=True)
 
 #Dataframes for demograpichs graphs
-dfDemo = dfResLab[["AÑO DE TOMA DE MUESTRA", "GENERO", "EDAD", "IDENTIFICACION", "FECHA DE TOMA DE MUESTRA", 
-"CODIGO DE LA MUESTRA"]].groupby(by=["AÑO DE TOMA DE MUESTRA", "GENERO", "EDAD", "IDENTIFICACION", 
-"FECHA DE TOMA DE MUESTRA"]).count().reset_index()
+dfDemo = dfResLab[["AÑO DE TOMA DE MUESTRA", "GENERO", "EDAD", "IDENTIFICACION"]].groupby(by=["AÑO DE TOMA DE MUESTRA", "GENERO", 
+"EDAD"], dropna=False).nunique().reset_index()
 
 #Function to generate demographics graphs
 def demo_graph_generator(year, gender, age):
@@ -72,14 +70,13 @@ def demo_graph_generator(year, gender, age):
     if gender!="Todos":
         dfDemo1 = dfDemo1[dfDemo1["GENERO"]==gender]
     dfDemo1 = dfDemo1[dfDemo1["EDAD"].isin(age)]
-    dfDemo1 = dfDemo1[["GENERO", "EDAD"]].value_counts().to_frame().reset_index()
-    dfDemo1.rename({"EDAD":"Edad","GENERO":"Género", 0:"Frecuencia"}, axis=1, inplace=True)
+    dfDemo1.rename({"EDAD":"Edad", "GENERO":"Género", "IDENTIFICACION":"Frecuencia"}, axis=1, inplace=True)
     dfDemo1.sort_values(by="Frecuencia", ascending=True, inplace=True)
     demo_graph = px.bar(
         dfDemo1,
         y = "Frecuencia",
         x = "Edad",
-        color = "Género",
+        color = "Género",    
     )
     demo_graph.update_layout(
         title="IAAS por Género y Edad",
@@ -90,11 +87,9 @@ def demo_graph_generator(year, gender, age):
 #Function to generate microorganisms graphs
 def micro_graph_generator(variable):
     
-    dfMicro = dfResLab[["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "MICROORGANISMO", "FAMILIA_MICROORGANISMO", "ANTIBIOTICO",
-    "FAMILIA_ANTIBIOTICO", "BACTERIA_HONGO", "CODIGO DE LA MUESTRA"]].groupby(by=["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", 
-    "FAMILIA_MICROORGANISMO", "ANTIBIOTICO", "FAMILIA_ANTIBIOTICO", "MICROORGANISMO", "BACTERIA_HONGO"]).count().reset_index()
-    dfMicro = dfMicro[variable].value_counts().head(20).to_frame().reset_index()
-    dfMicro.rename(columns={"index":variable.title(), variable:"Frecuencia"}, inplace=True)
+    dfMicro = dfResLab[[variable, "CODIGO DE LA MUESTRA"]].groupby(variable).nunique().reset_index()
+    dfMicro = dfMicro.sort_values("CODIGO DE LA MUESTRA", ascending=False).head(20)
+    dfMicro.rename(columns={variable:variable.title(), "CODIGO DE LA MUESTRA":"Frecuencia"}, inplace=True)
     dfMicro.sort_values(by="Frecuencia", ascending=True, inplace=True)
         
     if variable == "MICROORGANISMO":
@@ -128,21 +123,21 @@ def micro_graph_generator(variable):
     return micro_graph
 
 #Generate dataframes for heatmaps
-dfMicro1 = dfResLab[["AÑO DE TOMA DE MUESTRA", "FAMILIA_MICROORGANISMO", "SALA", "PISO", "FECHA DE TOMA DE MUESTRA", "ANTIBIOTICO", 
-"FAMILIA_ANTIBIOTICO", "RESISTENCIA", "CODIGO DE LA MUESTRA"]].groupby(by=["AÑO DE TOMA DE MUESTRA", "FAMILIA_MICROORGANISMO", "SALA", 
-"PISO", "FECHA DE TOMA DE MUESTRA", "FAMILIA_ANTIBIOTICO", "ANTIBIOTICO", "RESISTENCIA"]).count().reset_index()
 
 #Function to generate microorganisms heatmaps
 def micro_map_generator(year, variable1, variable2):
-    #pd.set_option("display.max_rows", 100)
+
+    
+    dfMicro1 = dfResLab[["AÑO DE TOMA DE MUESTRA", variable1, variable2, "CODIGO DE LA MUESTRA"]].groupby(by=["AÑO DE TOMA DE MUESTRA", 
+    variable1, variable2]).nunique().reset_index()
+        
     if year == "Todos":
-        table_micro_unit = pd.crosstab(index=dfMicro1[variable1], columns=dfMicro1[variable2], normalize="index")*100
-        #table_micro_unit.style.set_properties({"font-size":"24pt"})
+        table_micro_unit = pd.crosstab(index=dfMicro1[variable1], columns=dfMicro1[variable2], normalize="index", dropna=False)*100
+        
     else:
         dfMicro2 = dfMicro1[dfMicro1["AÑO DE TOMA DE MUESTRA"] == year]
-        table_micro_unit = pd.crosstab(index=dfMicro2[variable1], columns=dfMicro2[variable2], normalize="index")*100
-        #table_micro_unit.style.set_properties({"font-size":"24pt"})
-    
+        table_micro_unit = pd.crosstab(index=dfMicro2[variable1], columns=dfMicro2[variable2], normalize="index", dropna=False)*100
+            
     micro_map = px.imshow(
         table_micro_unit, 
         color_continuous_scale="purples"
