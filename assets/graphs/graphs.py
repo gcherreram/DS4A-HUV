@@ -1,8 +1,13 @@
 from dash import dcc
 import plotly.express as px
+import plotly.io as pio
 import pandas as pd
 import numpy as np
 import seaborn as sns
+from dash_bootstrap_templates import load_figure_template
+
+#Set graph template
+load_figure_template("cosmo")
 
 # Load the data
 dfResLab = pd.read_csv("data/databases/RESULTADOS_LAB.csv", on_bad_lines='skip', delimiter =";")
@@ -67,13 +72,14 @@ def demo_graph_generator(year, gender, age):
     if gender!="Todos":
         dfDemo1 = dfDemo1[dfDemo1["GENERO"]==gender]
     dfDemo1 = dfDemo1[dfDemo1["EDAD"].isin(age)]
-    dfDemo1 = dfDemo1["GENERO"].value_counts().to_frame().reset_index()
-    dfDemo1.rename(columns={"index":"Género", "GENERO":"Frecuencia"}, inplace=True)
+    dfDemo1 = dfDemo1[["GENERO", "EDAD"]].value_counts().to_frame().reset_index()
+    dfDemo1.rename({"EDAD":"Edad","GENERO":"Género", 0:"Frecuencia"}, axis=1, inplace=True)
     dfDemo1.sort_values(by="Frecuencia", ascending=True, inplace=True)
     demo_graph = px.bar(
         dfDemo1,
-        y="Frecuencia",
-        x="Género",
+        y = "Frecuencia",
+        x = "Edad",
+        color = "Género",
     )
     demo_graph.update_layout(
         title="IAAS por Género y Edad",
@@ -85,8 +91,8 @@ def demo_graph_generator(year, gender, age):
 def micro_graph_generator(variable):
     
     dfMicro = dfResLab[["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", "MICROORGANISMO", "FAMILIA_MICROORGANISMO", "ANTIBIOTICO",
-    "FAMILIA_ANTIBIOTICO", "GRAM_MICROORGANISMO", "CODIGO DE LA MUESTRA"]].groupby(by=["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", 
-    "FAMILIA_MICROORGANISMO", "ANTIBIOTICO", "FAMILIA_ANTIBIOTICO", "MICROORGANISMO", "GRAM_MICROORGANISMO"]).count().reset_index()
+    "FAMILIA_ANTIBIOTICO", "BACTERIA_HONGO", "CODIGO DE LA MUESTRA"]].groupby(by=["FECHA DE TOMA DE MUESTRA", "IDENTIFICACION", 
+    "FAMILIA_MICROORGANISMO", "ANTIBIOTICO", "FAMILIA_ANTIBIOTICO", "MICROORGANISMO", "BACTERIA_HONGO"]).count().reset_index()
     dfMicro = dfMicro[variable].value_counts().head(20).to_frame().reset_index()
     dfMicro.rename(columns={"index":variable.title(), variable:"Frecuencia"}, inplace=True)
     dfMicro.sort_values(by="Frecuencia", ascending=True, inplace=True)
@@ -94,12 +100,16 @@ def micro_graph_generator(variable):
     if variable == "MICROORGANISMO":
         micro_title = "Microorganismos más frecuentes en los laboratorios (top 20)"
     elif variable == "ANTIBIOTICO":
-        micro_title = "Antibioticos más utilizados en los laboratorios (top 20)"
+        micro_title = "Medicamentos más utilizados en los laboratorios (top 20)"
+        dfMicro.rename(columns={"Antibiotico":"Medicamentos"}, inplace=True)
     elif variable == "FAMILIA_MICROORGANISMO":
         micro_title = "Familias de microorganismos más frecuentes en los laboratorios (top 20)"
+        dfMicro.rename(columns={"Familia_Microorganismo":"Familias Microorganismos"}, inplace=True)
     elif variable == "FAMILIA_ANTIBIOTICO":
         micro_title = "Familias de antibiotico más frecuentes en los laboratorios (top 20)"
-    elif variable == "GRAM_MICROORGANISMO":
+        dfMicro.rename(columns={"Familia_Antibiotico":"Familias Medicamentos"}, inplace=True)
+    elif variable == "BACTERIA_HONGO":
+        dfMicro.rename(columns={"Bacteria_Hongo":"Bacteria / Hongo"}, inplace=True)
         micro_title = "Bacterias vs. Hongos"
     else:
         micro_title = "Titulo"
@@ -124,18 +134,19 @@ dfMicro1 = dfResLab[["AÑO DE TOMA DE MUESTRA", "FAMILIA_MICROORGANISMO", "SALA"
 
 #Function to generate microorganisms heatmaps
 def micro_map_generator(year, variable1, variable2):
-    pd.set_option("display.max_rows", 100)
+    #pd.set_option("display.max_rows", 100)
     if year == "Todos":
         table_micro_unit = pd.crosstab(index=dfMicro1[variable1], columns=dfMicro1[variable2], normalize="index")*100
-        table_micro_unit.style.set_properties({"font-size":"24pt"})
+        #table_micro_unit.style.set_properties({"font-size":"24pt"})
     else:
         dfMicro2 = dfMicro1[dfMicro1["AÑO DE TOMA DE MUESTRA"] == year]
         table_micro_unit = pd.crosstab(index=dfMicro2[variable1], columns=dfMicro2[variable2], normalize="index")*100
-        table_micro_unit.style.set_properties({"font-size":"24pt"})
+        #table_micro_unit.style.set_properties({"font-size":"24pt"})
+    
     micro_map = px.imshow(
         table_micro_unit, 
-        color_continuous_scale="blues"
+        color_continuous_scale="purples"
         )
     
-    return micro_map 
+    return micro_map
     

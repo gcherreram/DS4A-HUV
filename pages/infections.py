@@ -38,7 +38,7 @@ content_infections2 = dbc.Card([
             )),
         dbc.Row(dcc.Graph(figure=micro_map_generator("Todos", "FAMILIA_MICROORGANISMO", 
             "PISO"), id='micro_map_figure1'
-        ), justify="between"),
+        ), justify="center"),
     ])
 ])
     
@@ -54,7 +54,8 @@ content_infections3 = dbc.Card([
                 2021:{"label":"2021"},}
             )),
         dbc.Row(dcc.Graph(figure=micro_map_generator("Todos", "FAMILIA_MICROORGANISMO", 
-            "RESISTENCIA"), id='micro_map_figure2')),
+            "RESISTENCIA"), id='micro_map_figure2')
+            ,justify="center"),
     ])
 ])
         
@@ -90,12 +91,12 @@ layout = html.Div([
 
 def dropdown_interaction(dropdown_val):
 
-    if dropdown_val == 'Antibiotico':
+    if dropdown_val == 'Medicamentos':
         variable = "ANTIBIOTICO"
     elif dropdown_val == 'Familias de Microorganismos':
         variable = "FAMILIA_MICROORGANISMO"
     elif dropdown_val == "Bacteria/Hongo":
-        variable = "GRAM_MICROORGANISMO"
+        variable = "BACTERIA_HONGO"
     else:
         variable = "MICROORGANISMO"
 

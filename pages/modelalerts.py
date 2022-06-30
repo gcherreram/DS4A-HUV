@@ -9,7 +9,7 @@ from components.cards.sidecard import sidecard
 from assets.graphs.graphs import demo_graph_generator
 
 #Add alerts to page registry
-register_page(__name__, path="/modelalerts", name= "Modelo Tempranas", 
+register_page(__name__, path="/modelalerts", name= "Modelo", 
     title="Dashboard para el monitoreo de IAAS en el HUV - Alertas Tempranas", order=5)
 
 #Side menu cards
