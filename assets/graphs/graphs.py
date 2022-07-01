@@ -126,7 +126,6 @@ def micro_graph_generator(variable):
 
 #Function to generate microorganisms heatmaps
 def micro_map_generator(year, variable1, variable2):
-
     
     dfMicro1 = dfResLab[["AÑO DE TOMA DE MUESTRA", variable1, variable2, "CODIGO DE LA MUESTRA"]].groupby(by=["AÑO DE TOMA DE MUESTRA", 
     variable1, variable2]).nunique().reset_index()
