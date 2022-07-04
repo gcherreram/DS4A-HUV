@@ -1,9 +1,6 @@
 #Libraries
 import pandas as pd
 
-"""dic_unit = pd.read_csv("data/dictionaries/Dic_salas.csv", names=["SALA_HUV", "Sala", "Piso"], header=0, 
-    on_bad_lines='skip', delimiter =";", low_memory=False, encoding='latin-1')"""
-
 #Import dataframe with all dictionary info
 dic_unit = pd.read_csv("data/dictionaries/Dic_salas.csv", on_bad_lines='skip', delimiter =";", low_memory=False)
 
@@ -17,7 +14,12 @@ dic_floor_unit = (dic_unit[['Sala','Piso']]).set_index('Sala')
 dic_floor_unit = dic_floor_unit.to_dict()
 dic_floor_unit = dic_floor_unit.get('Piso')
 
-list_dicts = {"dic_rename_unit": dic_rename_unit, "dic_floor_unit":dic_floor_unit}
+#Create dictionary to assign codes to hospital units
+dic_code_unit = (dic_unit[['Sala','Codigo']]).set_index('Sala')
+dic_code_unit = dic_code_unit.to_dict()
+dic_code_unit = dic_code_unit('Codigo')
+
+list_dicts = {"dic_rename_unit": dic_rename_unit, "dic_floor_unit":dic_floor_unit, "dic_code_unit":dic_code_unit}
 
 def dictTransformUnit(variable, dictionary_ref):
     dictionary = list_dicts[dictionary_ref]

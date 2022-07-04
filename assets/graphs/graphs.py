@@ -4,7 +4,13 @@ import plotly.io as pio
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import folium
+import json
+import plotly.graph_objects as go
 from dash_bootstrap_templates import load_figure_template
+
+#Import own functions
+from alertgenerator import create_alerts
 
 #Set graph template
 load_figure_template("cosmo")
@@ -48,10 +54,11 @@ dfResLab['ANTIBIOTICO'] = dictTransform(dfResLab['ANTIBIOTICO'], "dic_rename_ant
 dfResLab['FAMILIA_ANTIBIOTICO'] = dictTransform(dfResLab['ANTIBIOTICO'], "dic_family_antibiotic")
 dfResLab['TIPO_ANTIBIOTICO'] = dictTransform(dfResLab['ANTIBIOTICO'], "dic_type_antibiotic")
 
-#Standardize hospital units and classify by floor
+#Standardize hospital units, add unit code and classify by floor 
 dfResLab['SALA'] = dictTransformUnit(dfResLab['SALA'], "dic_rename_unit")
 df_eliminate=dfResLab[dfResLab['SALA']=='eliminar'].index
 dfResLab=dfResLab.drop(df_eliminate)
+dfResLab['CODIGO_SALA'] = dictTransformUnit(dfResLab['SALA'], "dic_code_unit")
 dfResLab['PISO'] = dictTransformUnit(dfResLab['SALA'], "dic_floor_unit")
 
 #Simplify resistance level name
@@ -61,6 +68,9 @@ dfResLab["RESISTENCIA"].rename({"SIN ESPECIFICAR":"X","N":"R"}, axis=0, inplace=
 #Dataframes for demograpichs graphs
 dfDemo = dfResLab[["AÑO DE TOMA DE MUESTRA", "GENERO", "EDAD", "IDENTIFICACION"]].groupby(by=["AÑO DE TOMA DE MUESTRA", "GENERO", 
 "EDAD"], dropna=False).nunique().reset_index()
+
+#Create alerts in accordance to hospital codings
+dfResLab["ALERTAS"] = create_alerts(dfResLab)
 
 #Function to generate demographics graphs
 def demo_graph_generator(year, gender, age):
@@ -122,8 +132,6 @@ def micro_graph_generator(variable):
     
     return micro_graph
 
-#Generate dataframes for heatmaps
-
 #Function to generate microorganisms heatmaps
 def micro_map_generator(year, variable1, variable2):
     
@@ -143,4 +151,6 @@ def micro_map_generator(year, variable1, variable2):
         )
     
     return micro_map
+
+
     
