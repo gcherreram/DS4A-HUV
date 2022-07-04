@@ -19,10 +19,10 @@ HUV_logoII = "https://huv.gov.co/wp-content/uploads/2020/06/logo-HU_Horizontal_A
 #Generate page content
 content_demo1 = dbc.Container([
     dbc.Row(dcc.Dropdown(options=['Todos', 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022],
-        placeholder="Año", id="year_dropdown")),
-    dbc.Row(dcc.Dropdown(["Todos", "Femenino", "Masculino", "Sin Especificar"], placeholder="Género", id="gender_dropdown")),
+        value='Todos', id="year_dropdown")),
+    dbc.Row(dcc.Dropdown(["Todos", "Femenino", "Masculino", "Sin Especificar"], value='Todos', id="gender_dropdown")),
     dbc.Row(dcc.Dropdown(["Todos", "Menores de 5 años", "Entre 5 y 17 años", "Entre 18 y 60 años", "Mayores de 60"], 
-        placeholder="Edad", id="age_dropdown")),
+        value='Todos', id="age_dropdown")),
     dbc.Row(dbc.Button("Generar", id="demographics_button", class_name="me-2", n_clicks=0))
 ])
 
