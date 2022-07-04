@@ -15,18 +15,19 @@ register_page(__name__, path="/demographics", name="Demografia",
 #Logos
 HUV_logoII = "https://huv.gov.co/wp-content/uploads/2020/06/logo-HU_Horizontal_Azul.png"
 
-#Start graphs
-demographics_fig = demo_graph_generator("Todos", "Todos", list(range(0,120,1)))
 
 #Generate page content
 content_demo1 = dbc.Container([
-    dbc.Row(dcc.Dropdown(["Todos", 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022],
+    dbc.Row(dcc.Dropdown(options=['Todos', 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022],
         placeholder="Año", id="year_dropdown")),
     dbc.Row(dcc.Dropdown(["Todos", "Femenino", "Masculino", "Sin Especificar"], placeholder="Género", id="gender_dropdown")),
     dbc.Row(dcc.Dropdown(["Todos", "Menores de 5 años", "Entre 5 y 17 años", "Entre 18 y 60 años", "Mayores de 60"], 
         placeholder="Edad", id="age_dropdown")),
     dbc.Row(dbc.Button("Generar", id="demographics_button", class_name="me-2", n_clicks=0))
 ])
+
+#Start graphs
+demographics_fig = demo_graph_generator("Todos", "Todos", list(range(0,120,1)))
 
 content_demo2 = dbc.Container([
     dbc.Row(dcc.Graph(figure=demographics_fig, id="demographics_fig")),
@@ -71,6 +72,7 @@ layout = html.Div([
     )
 
 def update_demographics(selector_year, selector_gender, selector_age, n_clicks):
+
     if selector_gender == "Sin Especificar":
         selector_gender = "SIN ESPECIFICAR"
 
@@ -87,4 +89,4 @@ def update_demographics(selector_year, selector_gender, selector_age, n_clicks):
 
     if n_clicks is not None:
         new_demographics_fig = demo_graph_generator(selector_year, selector_gender, selector_age)
-    return [new_demographics_fig]
+        return [new_demographics_fig]

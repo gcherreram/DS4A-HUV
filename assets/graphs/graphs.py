@@ -73,9 +73,9 @@ dfResLab["ALERTAS"] = create_alerts(dfResLab)
 alerts = dfResLab.groupby("CODIGO DE LA MUESTRA")["Alerta"].sum()
 alerts = (alerts != 0)
 alerts = alerts.to_frame()
-dfResLab_alerts = dfResLab.drop(["FAMILIA_MICROORGANISMO","HOSPILTAL", "IDENTIFICACION", 'FECHA DE NACIMIENTO', 'GENERO', "TIPO DE MUESTRA" , "RESISTENCIA", "LA CONCENTRACION MINIMA O MAX", 
-"NUMERO DE AISLAMIENTO", "THM" ,"APB (boronico)", "EDTA (si son positivas o negativas)", "BACTERIA_HONGO", "ORDEN_MICROORGANISMO", "GRAM_MICROORGANISMO", "ANTIBIÓTICO_ANTIMICÓTICO", 
-"GRUPO_MEDICAMENTO", "PISO"], axis=1, inplace = True)
+dfResLab_alerts = dfResLab.copy()
+dfResLab_alerts = dfResLab_alerts.drop(["FAMILIA_MICROORGANISMO","HOSPILTAL", "IDENTIFICACION", 'FECHA DE NACIMIENTO', 'GENERO', "TIPO DE MUESTRA" , "RESISTENCIA", "LA CONCENTRACION MINIMA O MAX", 
+"NUMERO DE AISLAMIENTO", "THM" ,"APB (boronico)", "EDTA (si son positivas o negativas)", "BACTERIA_HONGO", "ORDEN_MICROORGANISMO", "GRAM_MICROORGANISMO", "PISO"], axis=1)
 df_alerts = dfResLab_alerts.join(alerts, lsuffix='_left', rsuffix='1')
 df_alerts = df_alerts.reset_index()
 df_alerts.drop(["Alerta_left"], axis=1, inplace = True)
@@ -135,7 +135,8 @@ def micro_graph_generator(variable):
         dfMicro,
         y=dfMicro.columns[0],
         x=dfMicro.columns[1],
-        orientation = "h",   
+        orientation = "h",
+        color = "Frecuencia",
     )
     micro_graph.update_layout(
         title = micro_title,

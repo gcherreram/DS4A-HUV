@@ -2,518 +2,518 @@
 import numpy as np
 
 #Create function to verify alert conditions provided by the hospital
-def create_alerts(dfResLab5):
-    dfResLab5["Alerta"] = np.where(
-            (dfResLab5['MICROORGANISMO']=='Escherichia coli')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, 0)
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Klebsiella pneumoniae')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Klebsiella oxytoca')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Klebsiella aerogenes')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Klebsiella ozaenae')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Pseudomonas aeruginosa')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Pseudomonas spp.')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Acinetobacter lwoffii/haemolyticus')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & ((dfResLab5['MICROORGANISMO']=='Acinetobacter baumannii') | (dfResLab5['MICROORGANISMO']=='Acinetobacter baumannii/calcoaceticus complejo'))
-        & ((dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Acinetobacter spp.') 
-        & ( (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & ((dfResLab5['MICROORGANISMO']=='Enterobacter cloacae')| (dfResLab5['MICROORGANISMO']=='Enterobacter asburiae') | (dfResLab5['MICROORGANISMO']=='Enterobacter hormaechei') | (dfResLab5['MICROORGANISMO']=='Enterobacter cancerogenus') )
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefoxitina' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Proteus mirabilis') 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Proteus vulgaris') 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Proteus penneri') 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Proteus spp.') 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Morganella morganii') 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & ((dfResLab5['MICROORGANISMO']=='Citrobacter freundii') | (dfResLab5['MICROORGANISMO']=='Citrobacter koseri') | (dfResLab5['MICROORGANISMO']=='Citrobacter youngae') 
-            | (dfResLab5['MICROORGANISMO']=='Citrobacter werkmanii') | (dfResLab5['MICROORGANISMO']=='Citrobacter amalonaticus')
-            | (dfResLab5['MICROORGANISMO']=='Citrobacter farmeri') | (dfResLab5['MICROORGANISMO']=='Citrobacter braakii'))
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Serratia marcescens') 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Serratia marcescens ssp marcescens') 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & ((dfResLab5['MICROORGANISMO']=='Aeromonas hydrophila') | (dfResLab5['MICROORGANISMO']=='Aeromonas caviae')
-            | (dfResLab5['MICROORGANISMO']=='Aeromonas veronii bv veronii') | (dfResLab5['MICROORGANISMO']=='Aeromonas veronii bv sobria'))
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & ((dfResLab5['MICROORGANISMO']=='Providencia rettgeri') | (dfResLab5['MICROORGANISMO']=='Providencia stuartii') | (dfResLab5['MICROORGANISMO']=='Providencia alcalifaciens')) 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' )
-            |(dfResLab5['ANTIBIOTICO']== 'Cefepima' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0)
-        & (dfResLab5['MICROORGANISMO']=='Salmonella spp.') 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))   , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0) 
-        & ((dfResLab5['MICROORGANISMO']=='Shigella') | (dfResLab5['MICROORGANISMO']=='Shigella flexneri') 
-            | (dfResLab5['MICROORGANISMO']=='Shigella boydii') | (dfResLab5['MICROORGANISMO']=='Shigella sonnei') 
-            | (dfResLab5['MICROORGANISMO']=='Shigella dysenteriae') ) 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Escherichia coli')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ampicilina' ) | (dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Cefazolina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Levofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Moxifloxacino' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefalotina' ) | (dfResLab5['ANTIBIOTICO']== 'Cefuroxima' ) | (dfResLab5['ANTIBIOTICO']== 'Cefoxitina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ) | (dfResLab5['ANTIBIOTICO']== 'Nitrofurantoína' ) | (dfResLab5['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Klebsiella pneumoniae')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ampicilina' ) | (dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Cefazolina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefalotina' ) | (dfResLab5['ANTIBIOTICO']== 'Cefuroxima' ) | (dfResLab5['ANTIBIOTICO']== 'Cefoxitina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ) | (dfResLab5['ANTIBIOTICO']== 'Nitrofurantoína' ) | (dfResLab5['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=="Klebsiella oxytoca")  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Cefazolina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefalotina' ) | (dfResLab5['ANTIBIOTICO']== 'Cefuroxima' ) | (dfResLab5['ANTIBIOTICO']== 'Cefoxitina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ) | (dfResLab5['ANTIBIOTICO']== 'Nitrofurantoína' ) | (dfResLab5['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) | (dfResLab5['ANTIBIOTICO']== 'Ampicilina' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-            (dfResLab5['MICROORGANISMO']=="Klebsiella ozaenae")  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Cefazolina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefalotina' ) | (dfResLab5['ANTIBIOTICO']== 'Cefuroxima' ) | (dfResLab5['ANTIBIOTICO']== 'Cefoxitina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ) | (dfResLab5['ANTIBIOTICO']== 'Nitrofurantoína' ) | (dfResLab5['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=="Klebsiella aerogenes")  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Cefazolina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefalotina' ) | (dfResLab5['ANTIBIOTICO']== 'Cefuroxima' ) | (dfResLab5['ANTIBIOTICO']== 'Cefoxitina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ) | (dfResLab5['ANTIBIOTICO']== 'Nitrofurantoína' ) | (dfResLab5['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=="Pseudomonas aeruginosa")  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftazidima') | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Aztreonam' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=="Pseudomonas spp.")  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftazidima') | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Aztreonam' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        ((dfResLab5['MICROORGANISMO']=='Acinetobacter baumannii') | (dfResLab5['MICROORGANISMO']=='Acinetobacter baumannii/calcoaceticus complejo')) 
-        & ((dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftazidima') | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ) | (dfResLab5['ANTIBIOTICO']== 'Rifampicina' ) | (dfResLab5['ANTIBIOTICO']== 'Levofloxacino' )
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' )| (dfResLab5['ANTIBIOTICO']== 'Colistina' ) | (dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Acinetobacter lwoffii/haemolyticus') 
-        & ((dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftazidima') | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ) | (dfResLab5['ANTIBIOTICO']== 'Rifampicina' ) | (dfResLab5['ANTIBIOTICO']== 'Levofloxacino' )
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' )| (dfResLab5['ANTIBIOTICO']== 'Colistina' ) | (dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Acinetobacter spp.') 
-        & ((dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftazidima') | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ) | (dfResLab5['ANTIBIOTICO']== 'Rifampicina' ) | (dfResLab5['ANTIBIOTICO']== 'Levofloxacino' )
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' )| (dfResLab5['ANTIBIOTICO']== 'Colistina' ) | (dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Proteus mirabilis')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ampicilina' ) | (dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Cefazolina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefalotina' ) | (dfResLab5['ANTIBIOTICO']== 'Cefuroxima' ) | (dfResLab5['ANTIBIOTICO']== 'Cefoxitina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ) | (dfResLab5['ANTIBIOTICO']== 'Nitrofurantoína' ) | (dfResLab5['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=="Proteus vulgaris")  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=="Proteus penneri")  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Proteus spp.')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ampicilina' ) | (dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Cefazolina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefalotina' ) | (dfResLab5['ANTIBIOTICO']== 'Cefuroxima' ) | (dfResLab5['ANTIBIOTICO']== 'Cefoxitina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            |  (dfResLab5['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=="Morganella morganii")  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona')  
-            | (dfResLab5['ANTIBIOTICO']== 'Aztreonam' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        ((dfResLab5['MICROORGANISMO']=='Citrobacter freundii') | (dfResLab5['MICROORGANISMO']=='Citrobacter koseri') | (dfResLab5['MICROORGANISMO']=='Citrobacter youngae') 
-        | (dfResLab5['MICROORGANISMO']=='Citrobacter werkmanii') | (dfResLab5['MICROORGANISMO']=='Citrobacter amalonaticus')
-        | (dfResLab5['MICROORGANISMO']=='Citrobacter farmeri') | (dfResLab5['MICROORGANISMO']=='Citrobacter braakii')) 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona')  
-            | (dfResLab5['ANTIBIOTICO']== 'Aztreonam' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=="Serratia marcescens")  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona')  
-            | (dfResLab5['ANTIBIOTICO']== 'Aztreonam' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=="Serratia marcescens ssp marcescens")  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona')  
-            | (dfResLab5['ANTIBIOTICO']== 'Aztreonam' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        ((dfResLab5['MICROORGANISMO']=='Aeromonas hydrophila') | (dfResLab5['MICROORGANISMO']=='Aeromonas caviae')
-            | (dfResLab5['MICROORGANISMO']=='Aeromonas veronii bv veronii') | (dfResLab5['MICROORGANISMO']=='Aeromonas veronii bv sobria') ) 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona')  
-            | (dfResLab5['ANTIBIOTICO']== 'Aztreonam' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        ((dfResLab5['MICROORGANISMO']=='Providencia rettgeri') | (dfResLab5['MICROORGANISMO']=='Providencia stuartii') | (dfResLab5['MICROORGANISMO']=='Providencia alcalifaciens')) 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona')  
-            | (dfResLab5['ANTIBIOTICO']== 'Aztreonam' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=="Salmonella spp.")  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona') | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' )  
-            | (dfResLab5['ANTIBIOTICO']== 'Aztreonam' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        ((dfResLab5['MICROORGANISMO']=='Shigella') | (dfResLab5['MICROORGANISMO']=='Shigella flexneri') 
-            | (dfResLab5['MICROORGANISMO']=='Shigella boydii') | (dfResLab5['MICROORGANISMO']=='Shigella sonnei') 
-            | (dfResLab5['MICROORGANISMO']=='Shigella dysenteriae') ) 
-        & ((dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona') | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' )  
-            | (dfResLab5['ANTIBIOTICO']== 'Aztreonam' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Escherichia coli')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & (dfResLab5['RESISTENCIA']=='S')  & (dfResLab5['ESBL (+ es blee )']=='+') , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Klebsiella pneumoniae')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & (dfResLab5['RESISTENCIA']=='S')  & (dfResLab5['ESBL (+ es blee )']=='+') , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Klebsiella oxytoca')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & (dfResLab5['RESISTENCIA']=='S')  & (dfResLab5['ESBL (+ es blee )']=='+') , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Klebsiella aerogenes')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & (dfResLab5['RESISTENCIA']=='S')  & (dfResLab5['ESBL (+ es blee )']=='+') , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Klebsiella ozaenae')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & (dfResLab5['RESISTENCIA']=='S')  & (dfResLab5['ESBL (+ es blee )']=='+') , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Proteus mirabilis')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & (dfResLab5['RESISTENCIA']=='S')  & (dfResLab5['ESBL (+ es blee )']=='+') , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Proteus vulgaris')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & (dfResLab5['RESISTENCIA']=='S')  & (dfResLab5['ESBL (+ es blee )']=='+') , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Proteus penneri')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & (dfResLab5['RESISTENCIA']=='S')  & (dfResLab5['ESBL (+ es blee )']=='+') , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Proteus spp.')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & (dfResLab5['RESISTENCIA']=='S')  & (dfResLab5['ESBL (+ es blee )']=='+') , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Stenotrophomonas maltophilia')  
-        & (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) 
-        & ((dfResLab5['RESISTENCIA']=='S') | (dfResLab5['RESISTENCIA']=='R'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Neisseria meningitidis')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Ampicilina' ) | (dfResLab5['ANTIBIOTICO']== 'Penicilina G' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Neisseria gonorrhoeae')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Azitromicina' ) | (dfResLab5['ANTIBIOTICO']== 'Penicilina G' )
-            | (dfResLab5['ANTIBIOTICO']== 'Tetraciclina' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        ((dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-negativo") | (dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-positivo")
-            |(dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo no identificado no fermentador") | (dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo"))  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        ((dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-negativo") | (dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-positivo")
-            |(dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo no identificado no fermentador") | (dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo"))  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ertapenem' ) | (dfResLab5['ANTIBIOTICO']== 'Meropenem' ) | (dfResLab5['ANTIBIOTICO']== 'Imipenem' ) | (dfResLab5['ANTIBIOTICO']== 'Doripenem' ))
-        & (dfResLab5['RESISTENCIA']=='S')  & (dfResLab5['ESBL (+ es blee )']=='+') , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        ((dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-negativo") | (dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-positivo")
-            |(dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo no identificado no fermentador") | (dfResLab5['MICROORGANISMO']== "Bacilo Gram-negativo"))  
-        & ((dfResLab5['ANTIBIOTICO']== 'Ampicilina' ) | (dfResLab5['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (dfResLab5['ANTIBIOTICO']== 'Ciprofloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Cefazolina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefalotina' ) | (dfResLab5['ANTIBIOTICO']== 'Cefuroxima' ) | (dfResLab5['ANTIBIOTICO']== 'Cefoxitina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' ) | (dfResLab5['ANTIBIOTICO']== 'Cefepima' )
-            | (dfResLab5['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (dfResLab5['ANTIBIOTICO']== 'Amikacina' ) | (dfResLab5['ANTIBIOTICO']== 'Gentamicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Tigeciclina' ) | (dfResLab5['ANTIBIOTICO']== 'Nitrofurantoína' ) | (dfResLab5['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
-            | (dfResLab5['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Staphylococcus aureus')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Vancomicina' ) | (dfResLab5['ANTIBIOTICO']== 'Daptomicina' ) | (dfResLab5['ANTIBIOTICO']== 'Linezolida' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO']=='Staphylococcus aureus')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Vancomicina' ) | (dfResLab5['ANTIBIOTICO']== 'Oxacilina' ) )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='S'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where(
-        (dfResLab5['MICROORGANISMO']=='Staphylococcus epidermidis')  
-        & (dfResLab5['ANTIBIOTICO']== 'Oxacilina' ) 
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='S'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        dfResLab5['MICROORGANISMO'].str.contains('Staphylococcus') 
-        & (dfResLab5['ANTIBIOTICO']== 'Oxacilina' ) 
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='S'))  , 1, dfResLab5["Alerta"])
-
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        dfResLab5['MICROORGANISMO'].str.contains('Enterococcus')  
-        & ((dfResLab5['ANTIBIOTICO']== 'Vancomicina' ) | (dfResLab5['ANTIBIOTICO']== 'Ampicilina'))  
-        & (dfResLab5['RESISTENCIA']=='R')  , 1, dfResLab5["Alerta"])
+def create_alerts(df):
+    df["Alerta"] = np.where(
+            (df['MICROORGANISMO']=='Escherichia coli')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, 0)
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Klebsiella pneumoniae')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Klebsiella oxytoca')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Klebsiella aerogenes')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' )
+            | (df['ANTIBIOTICO']== 'Cefepima' ) | (df['ANTIBIOTICO']== 'Ceftriaxona' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Klebsiella ozaenae')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' )
+            | (df['ANTIBIOTICO']== 'Cefepima' ) | (df['ANTIBIOTICO']== 'Ceftriaxona' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Pseudomonas aeruginosa')  
+        & ((df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Pseudomonas spp.')  
+        & ((df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Acinetobacter lwoffii/haemolyticus')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & ((df['MICROORGANISMO']=='Acinetobacter baumannii') | (df['MICROORGANISMO']=='Acinetobacter baumannii/calcoaceticus complejo'))
+        & ((df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Acinetobacter spp.') 
+        & ( (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & ((df['MICROORGANISMO']=='Enterobacter cloacae')| (df['MICROORGANISMO']=='Enterobacter asburiae') | (df['MICROORGANISMO']=='Enterobacter hormaechei') | (df['MICROORGANISMO']=='Enterobacter cancerogenus') )
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' )
+            | (df['ANTIBIOTICO']== 'Cefepima' ) | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefoxitina' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Proteus mirabilis') 
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Proteus vulgaris') 
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Proteus penneri') 
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Proteus spp.') 
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Morganella morganii') 
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & ((df['MICROORGANISMO']=='Citrobacter freundii') | (df['MICROORGANISMO']=='Citrobacter koseri') | (df['MICROORGANISMO']=='Citrobacter youngae') 
+            | (df['MICROORGANISMO']=='Citrobacter werkmanii') | (df['MICROORGANISMO']=='Citrobacter amalonaticus')
+            | (df['MICROORGANISMO']=='Citrobacter farmeri') | (df['MICROORGANISMO']=='Citrobacter braakii'))
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' )
+            | (df['ANTIBIOTICO']== 'Cefepima' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Serratia marcescens') 
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Serratia marcescens ssp marcescens') 
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & ((df['MICROORGANISMO']=='Aeromonas hydrophila') | (df['MICROORGANISMO']=='Aeromonas caviae')
+            | (df['MICROORGANISMO']=='Aeromonas veronii bv veronii') | (df['MICROORGANISMO']=='Aeromonas veronii bv sobria'))
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' )
+            | (df['ANTIBIOTICO']== 'Cefepima' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & ((df['MICROORGANISMO']=='Providencia rettgeri') | (df['MICROORGANISMO']=='Providencia stuartii') | (df['MICROORGANISMO']=='Providencia alcalifaciens')) 
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' )
+            |(df['ANTIBIOTICO']== 'Cefepima' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0)
+        & (df['MICROORGANISMO']=='Salmonella spp.') 
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))   , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0) 
+        & ((df['MICROORGANISMO']=='Shigella') | (df['MICROORGANISMO']=='Shigella flexneri') 
+            | (df['MICROORGANISMO']=='Shigella boydii') | (df['MICROORGANISMO']=='Shigella sonnei') 
+            | (df['MICROORGANISMO']=='Shigella dysenteriae') ) 
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Escherichia coli')  
+        & ((df['ANTIBIOTICO']== 'Ampicilina' ) | (df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Cefazolina' )
+            | (df['ANTIBIOTICO']== 'Levofloxacino' ) | (df['ANTIBIOTICO']== 'Moxifloxacino' )
+            | (df['ANTIBIOTICO']== 'Cefalotina' ) | (df['ANTIBIOTICO']== 'Cefuroxima' ) | (df['ANTIBIOTICO']== 'Cefoxitina' )
+            | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Cefepima' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Tigeciclina' ) | (df['ANTIBIOTICO']== 'Nitrofurantoína' ) | (df['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Klebsiella pneumoniae')  
+        & ((df['ANTIBIOTICO']== 'Ampicilina' ) | (df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Cefazolina' )
+            | (df['ANTIBIOTICO']== 'Cefalotina' ) | (df['ANTIBIOTICO']== 'Cefuroxima' ) | (df['ANTIBIOTICO']== 'Cefoxitina' )
+            | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Cefepima' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Tigeciclina' ) | (df['ANTIBIOTICO']== 'Nitrofurantoína' ) | (df['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=="Klebsiella oxytoca")  
+        & ((df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Cefazolina' )
+            | (df['ANTIBIOTICO']== 'Cefalotina' ) | (df['ANTIBIOTICO']== 'Cefuroxima' ) | (df['ANTIBIOTICO']== 'Cefoxitina' )
+            | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Cefepima' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Tigeciclina' ) | (df['ANTIBIOTICO']== 'Nitrofurantoína' ) | (df['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) | (df['ANTIBIOTICO']== 'Ampicilina' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+            (df['MICROORGANISMO']=="Klebsiella ozaenae")  
+        & ((df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Cefazolina' )
+            | (df['ANTIBIOTICO']== 'Cefalotina' ) | (df['ANTIBIOTICO']== 'Cefuroxima' ) | (df['ANTIBIOTICO']== 'Cefoxitina' )
+            | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Cefepima' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Tigeciclina' ) | (df['ANTIBIOTICO']== 'Nitrofurantoína' ) | (df['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=="Klebsiella aerogenes")  
+        & ((df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Cefazolina' )
+            | (df['ANTIBIOTICO']== 'Cefalotina' ) | (df['ANTIBIOTICO']== 'Cefuroxima' ) | (df['ANTIBIOTICO']== 'Cefoxitina' )
+            | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Cefepima' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Tigeciclina' ) | (df['ANTIBIOTICO']== 'Nitrofurantoína' ) | (df['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=="Pseudomonas aeruginosa")  
+        & ((df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Ceftazidima') | (df['ANTIBIOTICO']== 'Cefepima' ) 
+            | (df['ANTIBIOTICO']== 'Aztreonam' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=="Pseudomonas spp.")  
+        & ((df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Ceftazidima') | (df['ANTIBIOTICO']== 'Cefepima' ) 
+            | (df['ANTIBIOTICO']== 'Aztreonam' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        ((df['MICROORGANISMO']=='Acinetobacter baumannii') | (df['MICROORGANISMO']=='Acinetobacter baumannii/calcoaceticus complejo')) 
+        & ((df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Ceftazidima') | (df['ANTIBIOTICO']== 'Cefepima' ) 
+            | (df['ANTIBIOTICO']== 'Tigeciclina' ) | (df['ANTIBIOTICO']== 'Rifampicina' ) | (df['ANTIBIOTICO']== 'Levofloxacino' )
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' )| (df['ANTIBIOTICO']== 'Colistina' ) | (df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Acinetobacter lwoffii/haemolyticus') 
+        & ((df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Ceftazidima') | (df['ANTIBIOTICO']== 'Cefepima' ) 
+            | (df['ANTIBIOTICO']== 'Tigeciclina' ) | (df['ANTIBIOTICO']== 'Rifampicina' ) | (df['ANTIBIOTICO']== 'Levofloxacino' )
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' )| (df['ANTIBIOTICO']== 'Colistina' ) | (df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Acinetobacter spp.') 
+        & ((df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Ceftazidima') | (df['ANTIBIOTICO']== 'Cefepima' ) 
+            | (df['ANTIBIOTICO']== 'Tigeciclina' ) | (df['ANTIBIOTICO']== 'Rifampicina' ) | (df['ANTIBIOTICO']== 'Levofloxacino' )
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' )| (df['ANTIBIOTICO']== 'Colistina' ) | (df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Proteus mirabilis')  
+        & ((df['ANTIBIOTICO']== 'Ampicilina' ) | (df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Cefazolina' )
+            | (df['ANTIBIOTICO']== 'Cefalotina' ) | (df['ANTIBIOTICO']== 'Cefuroxima' ) | (df['ANTIBIOTICO']== 'Cefoxitina' )
+            | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Cefepima' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Tigeciclina' ) | (df['ANTIBIOTICO']== 'Nitrofurantoína' ) | (df['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=="Proteus vulgaris")  
+        & ((df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (df['ANTIBIOTICO']== 'Ciprofloxacino' ) 
+            | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Cefepima' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=="Proteus penneri")  
+        & ((df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (df['ANTIBIOTICO']== 'Ciprofloxacino' ) 
+            | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Cefepima' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Proteus spp.')  
+        & ((df['ANTIBIOTICO']== 'Ampicilina' ) | (df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Cefazolina' )
+            | (df['ANTIBIOTICO']== 'Cefalotina' ) | (df['ANTIBIOTICO']== 'Cefuroxima' ) | (df['ANTIBIOTICO']== 'Cefoxitina' )
+            | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Cefepima' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            |  (df['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=="Morganella morganii")  
+        & ((df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Ceftriaxona')  
+            | (df['ANTIBIOTICO']== 'Aztreonam' ) | (df['ANTIBIOTICO']== 'Cefepima' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        ((df['MICROORGANISMO']=='Citrobacter freundii') | (df['MICROORGANISMO']=='Citrobacter koseri') | (df['MICROORGANISMO']=='Citrobacter youngae') 
+        | (df['MICROORGANISMO']=='Citrobacter werkmanii') | (df['MICROORGANISMO']=='Citrobacter amalonaticus')
+        | (df['MICROORGANISMO']=='Citrobacter farmeri') | (df['MICROORGANISMO']=='Citrobacter braakii')) 
+        & ((df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Ceftriaxona')  
+            | (df['ANTIBIOTICO']== 'Aztreonam' ) | (df['ANTIBIOTICO']== 'Cefepima' ) | (df['ANTIBIOTICO']== 'Tigeciclina' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=="Serratia marcescens")  
+        & ((df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Ceftriaxona')  
+            | (df['ANTIBIOTICO']== 'Aztreonam' ) | (df['ANTIBIOTICO']== 'Cefepima' ) | (df['ANTIBIOTICO']== 'Tigeciclina' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=="Serratia marcescens ssp marcescens")  
+        & ((df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Ceftriaxona')  
+            | (df['ANTIBIOTICO']== 'Aztreonam' ) | (df['ANTIBIOTICO']== 'Cefepima' ) | (df['ANTIBIOTICO']== 'Tigeciclina' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        ((df['MICROORGANISMO']=='Aeromonas hydrophila') | (df['MICROORGANISMO']=='Aeromonas caviae')
+            | (df['MICROORGANISMO']=='Aeromonas veronii bv veronii') | (df['MICROORGANISMO']=='Aeromonas veronii bv sobria') ) 
+        & ((df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Ceftriaxona')  
+            | (df['ANTIBIOTICO']== 'Aztreonam' ) | (df['ANTIBIOTICO']== 'Cefepima' ) | (df['ANTIBIOTICO']== 'Tigeciclina' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        ((df['MICROORGANISMO']=='Providencia rettgeri') | (df['MICROORGANISMO']=='Providencia stuartii') | (df['MICROORGANISMO']=='Providencia alcalifaciens')) 
+        & ((df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Ceftriaxona')  
+            | (df['ANTIBIOTICO']== 'Aztreonam' ) | (df['ANTIBIOTICO']== 'Cefepima' ) | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=="Salmonella spp.")  
+        & ((df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' )
+            | (df['ANTIBIOTICO']== 'Ceftriaxona') | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' )  
+            | (df['ANTIBIOTICO']== 'Aztreonam' ) | (df['ANTIBIOTICO']== 'Cefepima' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        ((df['MICROORGANISMO']=='Shigella') | (df['MICROORGANISMO']=='Shigella flexneri') 
+            | (df['MICROORGANISMO']=='Shigella boydii') | (df['MICROORGANISMO']=='Shigella sonnei') 
+            | (df['MICROORGANISMO']=='Shigella dysenteriae') ) 
+        & ((df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' )
+            | (df['ANTIBIOTICO']== 'Ceftriaxona') | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' )  
+            | (df['ANTIBIOTICO']== 'Aztreonam' ) | (df['ANTIBIOTICO']== 'Cefepima' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Escherichia coli')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & (df['RESISTENCIA']=='S')  & (df['ESBL (+ es blee )']=='+') , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Klebsiella pneumoniae')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & (df['RESISTENCIA']=='S')  & (df['ESBL (+ es blee )']=='+') , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Klebsiella oxytoca')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & (df['RESISTENCIA']=='S')  & (df['ESBL (+ es blee )']=='+') , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Klebsiella aerogenes')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & (df['RESISTENCIA']=='S')  & (df['ESBL (+ es blee )']=='+') , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Klebsiella ozaenae')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & (df['RESISTENCIA']=='S')  & (df['ESBL (+ es blee )']=='+') , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Proteus mirabilis')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & (df['RESISTENCIA']=='S')  & (df['ESBL (+ es blee )']=='+') , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Proteus vulgaris')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & (df['RESISTENCIA']=='S')  & (df['ESBL (+ es blee )']=='+') , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Proteus penneri')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & (df['RESISTENCIA']=='S')  & (df['ESBL (+ es blee )']=='+') , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Proteus spp.')  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & (df['RESISTENCIA']=='S')  & (df['ESBL (+ es blee )']=='+') , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Stenotrophomonas maltophilia')  
+        & (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) 
+        & ((df['RESISTENCIA']=='S') | (df['RESISTENCIA']=='R'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Neisseria meningitidis')  
+        & ((df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Ampicilina' ) | (df['ANTIBIOTICO']== 'Penicilina G' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Neisseria gonorrhoeae')  
+        & ((df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Azitromicina' ) | (df['ANTIBIOTICO']== 'Penicilina G' )
+            | (df['ANTIBIOTICO']== 'Tetraciclina' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        ((df['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-negativo") | (df['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-positivo")
+            |(df['MICROORGANISMO']== "Bacilo Gram-negativo no identificado no fermentador") | (df['MICROORGANISMO']== "Bacilo Gram-negativo"))  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        ((df['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-negativo") | (df['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-positivo")
+            |(df['MICROORGANISMO']== "Bacilo Gram-negativo no identificado no fermentador") | (df['MICROORGANISMO']== "Bacilo Gram-negativo"))  
+        & ((df['ANTIBIOTICO']== 'Ertapenem' ) | (df['ANTIBIOTICO']== 'Meropenem' ) | (df['ANTIBIOTICO']== 'Imipenem' ) | (df['ANTIBIOTICO']== 'Doripenem' ))
+        & (df['RESISTENCIA']=='S')  & (df['ESBL (+ es blee )']=='+') , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        ((df['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-negativo") | (df['MICROORGANISMO']== "Bacilo Gram-negativo oxidasa-positivo")
+            |(df['MICROORGANISMO']== "Bacilo Gram-negativo no identificado no fermentador") | (df['MICROORGANISMO']== "Bacilo Gram-negativo"))  
+        & ((df['ANTIBIOTICO']== 'Ampicilina' ) | (df['ANTIBIOTICO']== 'Ampicilina-Sulbactam' ) | (df['ANTIBIOTICO']== 'Ciprofloxacino' ) | (df['ANTIBIOTICO']== 'Cefazolina' )
+            | (df['ANTIBIOTICO']== 'Cefalotina' ) | (df['ANTIBIOTICO']== 'Cefuroxima' ) | (df['ANTIBIOTICO']== 'Cefoxitina' )
+            | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' ) | (df['ANTIBIOTICO']== 'Cefepima' )
+            | (df['ANTIBIOTICO']== 'Piperacilina-Tazobactam' ) | (df['ANTIBIOTICO']== 'Amikacina' ) | (df['ANTIBIOTICO']== 'Gentamicina' )
+            | (df['ANTIBIOTICO']== 'Tigeciclina' ) | (df['ANTIBIOTICO']== 'Nitrofurantoína' ) | (df['ANTIBIOTICO']== 'Fosfomicina c/G6P' ) 
+            | (df['ANTIBIOTICO']== 'Trimetoprim-Sulfametoxazol' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Staphylococcus aureus')  
+        & ((df['ANTIBIOTICO']== 'Vancomicina' ) | (df['ANTIBIOTICO']== 'Daptomicina' ) | (df['ANTIBIOTICO']== 'Linezolida' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO']=='Staphylococcus aureus')  
+        & ((df['ANTIBIOTICO']== 'Vancomicina' ) | (df['ANTIBIOTICO']== 'Oxacilina' ) )
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='S'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where(
+        (df['MICROORGANISMO']=='Staphylococcus epidermidis')  
+        & (df['ANTIBIOTICO']== 'Oxacilina' ) 
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='S'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        df['MICROORGANISMO'].str.contains('Staphylococcus') 
+        & (df['ANTIBIOTICO']== 'Oxacilina' ) 
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='S'))  , 1, df["Alerta"])
+
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        df['MICROORGANISMO'].str.contains('Enterococcus')  
+        & ((df['ANTIBIOTICO']== 'Vancomicina' ) | (df['ANTIBIOTICO']== 'Ampicilina'))  
+        & (df['RESISTENCIA']=='R')  , 1, df["Alerta"])
             
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO'].str.contains('Enterococcus'))  
-        & (dfResLab5['ANTIBIOTICO']== 'Ampicilina')  
-        & (dfResLab5['RESISTENCIA']=='S')  , 1, dfResLab5["Alerta"])
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO'].str.contains('Enterococcus'))  
+        & (df['ANTIBIOTICO']== 'Ampicilina')  
+        & (df['RESISTENCIA']=='S')  , 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        dfResLab5['MICROORGANISMO'].str.contains('Streptococcus') 
-        & ((dfResLab5['ANTIBIOTICO']== 'Vancomicina' ) | (dfResLab5['ANTIBIOTICO']== 'Levofloxacino' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ceftriaxona' ) | (dfResLab5['ANTIBIOTICO']== 'Cefotaximo' )
-            | (dfResLab5['ANTIBIOTICO']== 'Cefepima' ) | (dfResLab5['ANTIBIOTICO']== 'Eritromicina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Moxifloxacino' ) | (dfResLab5['ANTIBIOTICO']== 'Penicilina G' )
-            | (dfResLab5['ANTIBIOTICO']== 'Ampicilina' ) | (dfResLab5['ANTIBIOTICO']== 'Amoxicilina' ))
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        df['MICROORGANISMO'].str.contains('Streptococcus') 
+        & ((df['ANTIBIOTICO']== 'Vancomicina' ) | (df['ANTIBIOTICO']== 'Levofloxacino' )
+            | (df['ANTIBIOTICO']== 'Ceftriaxona' ) | (df['ANTIBIOTICO']== 'Cefotaximo' )
+            | (df['ANTIBIOTICO']== 'Cefepima' ) | (df['ANTIBIOTICO']== 'Eritromicina' )
+            | (df['ANTIBIOTICO']== 'Moxifloxacino' ) | (df['ANTIBIOTICO']== 'Penicilina G' )
+            | (df['ANTIBIOTICO']== 'Ampicilina' ) | (df['ANTIBIOTICO']== 'Amoxicilina' ))
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO'].str.contains('Candida'))    
-        & (dfResLab5['RESISTENCIA']=='S')  , 1, dfResLab5["Alerta"])
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO'].str.contains('Candida'))    
+        & (df['RESISTENCIA']=='S')  , 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO'].str.contains('Candida'))   
-        & ((dfResLab5['ANTIBIOTICO']== 'Anfotericina B' ) | (dfResLab5['ANTIBIOTICO']== 'Caspofungina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Anidulafungina' ) | (dfResLab5['ANTIBIOTICO']== 'Micafungina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Fluconazol' ) | (dfResLab5['ANTIBIOTICO']== 'Itraconazol' )
-            | (dfResLab5['ANTIBIOTICO']== 'Voriconazol' ) | (dfResLab5['ANTIBIOTICO']== 'Posaconazol' )
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO'].str.contains('Candida'))   
+        & ((df['ANTIBIOTICO']== 'Anfotericina B' ) | (df['ANTIBIOTICO']== 'Caspofungina' )
+            | (df['ANTIBIOTICO']== 'Anidulafungina' ) | (df['ANTIBIOTICO']== 'Micafungina' )
+            | (df['ANTIBIOTICO']== 'Fluconazol' ) | (df['ANTIBIOTICO']== 'Itraconazol' )
+            | (df['ANTIBIOTICO']== 'Voriconazol' ) | (df['ANTIBIOTICO']== 'Posaconazol' )
         )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO'].str.contains('Cryptococcus'))   
-        & ((dfResLab5['ANTIBIOTICO']== 'Anfotericina B' ) | (dfResLab5['ANTIBIOTICO']== 'Flucitosina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Fluconazol' ) | (dfResLab5['ANTIBIOTICO']== 'Itraconazol' )
-            | (dfResLab5['ANTIBIOTICO']== 'Voriconazol' ) | (dfResLab5['ANTIBIOTICO']== 'Posaconazol' )
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO'].str.contains('Cryptococcus'))   
+        & ((df['ANTIBIOTICO']== 'Anfotericina B' ) | (df['ANTIBIOTICO']== 'Flucitosina' )
+            | (df['ANTIBIOTICO']== 'Fluconazol' ) | (df['ANTIBIOTICO']== 'Itraconazol' )
+            | (df['ANTIBIOTICO']== 'Voriconazol' ) | (df['ANTIBIOTICO']== 'Posaconazol' )
         )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO'].str.contains('Cryptococcus')) &   
-        (dfResLab5['RESISTENCIA']=='S')  , 1, dfResLab5["Alerta"])
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO'].str.contains('Cryptococcus')) &   
+        (df['RESISTENCIA']=='S')  , 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO'].str.contains('Aspergillus'))   
-        & ((dfResLab5['ANTIBIOTICO']== 'Anfotericina B' ) | (dfResLab5['ANTIBIOTICO']== 'Caspofungina' )
-            | (dfResLab5['ANTIBIOTICO']== 'Anidulafungina' ) | (dfResLab5['ANTIBIOTICO']== 'Micafungina' )
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO'].str.contains('Aspergillus'))   
+        & ((df['ANTIBIOTICO']== 'Anfotericina B' ) | (df['ANTIBIOTICO']== 'Caspofungina' )
+            | (df['ANTIBIOTICO']== 'Anidulafungina' ) | (df['ANTIBIOTICO']== 'Micafungina' )
         )
-        & ((dfResLab5['RESISTENCIA']=='R') | (dfResLab5['RESISTENCIA']=='I'))  , 1, dfResLab5["Alerta"])
+        & ((df['RESISTENCIA']=='R') | (df['RESISTENCIA']=='I'))  , 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        (dfResLab5['MICROORGANISMO'].str.contains('Aspergillus'))
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        (df['MICROORGANISMO'].str.contains('Aspergillus'))
         &    
-        (dfResLab5['RESISTENCIA']=='S')  , 1, dfResLab5["Alerta"])
+        (df['RESISTENCIA']=='S')  , 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where(  (dfResLab5["Alerta"] == 0) &
-        dfResLab5['MICROORGANISMO'].str.contains('Fusariums'), 1, dfResLab5["Alerta"])
+    df["Alerta"] = np.where(  (df["Alerta"] == 0) &
+        df['MICROORGANISMO'].str.contains('Fusariums'), 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where(  (dfResLab5["Alerta"] == 0) &
-        dfResLab5['MICROORGANISMO'].str.contains('Bacillus'), 1, dfResLab5["Alerta"])
+    df["Alerta"] = np.where(  (df["Alerta"] == 0) &
+        df['MICROORGANISMO'].str.contains('Bacillus'), 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where(  (dfResLab5["Alerta"] == 0) &
-        dfResLab5['MICROORGANISMO'].str.contains('Rhizo'), 1, dfResLab5["Alerta"])
+    df["Alerta"] = np.where(  (df["Alerta"] == 0) &
+        df['MICROORGANISMO'].str.contains('Rhizo'), 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where(  (dfResLab5["Alerta"] == 0) &
-        dfResLab5['MICROORGANISMO'].str.contains('Burkholderia'), 1, dfResLab5["Alerta"])
+    df["Alerta"] = np.where(  (df["Alerta"] == 0) &
+        df['MICROORGANISMO'].str.contains('Burkholderia'), 1, df["Alerta"])
 
-    dfResLab5["Alerta"] = np.where( (dfResLab5["Alerta"] == 0) &
-        dfResLab5['MICROORGANISMO'].str.contains('Clostridioides'), 1, dfResLab5["Alerta"])
+    df["Alerta"] = np.where( (df["Alerta"] == 0) &
+        df['MICROORGANISMO'].str.contains('Clostridioides'), 1, df["Alerta"])
     
-    return dfResLab5
+    return df["Alerta"]
