@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 from dash_bootstrap_templates import load_figure_template
 
 #Import own functions
-from alertgenerator import create_alerts
+from assets.graphs.alertgenerator import create_alerts
 
 #Set graph template
 load_figure_template("cosmo")
@@ -63,14 +63,26 @@ dfResLab['PISO'] = dictTransformUnit(dfResLab['SALA'], "dic_floor_unit")
 
 #Simplify resistance level name
 dfResLab["RESISTENCIA"] = dfResLab['SENSIBLE / RESISTENTE / INTERMEDIO']
+#Standardize resistance level values
 dfResLab["RESISTENCIA"].rename({"SIN ESPECIFICAR":"X","N":"R"}, axis=0, inplace=True)
+
+#Create alert variable in accordance to hospital codings
+dfResLab["ALERTAS"] = create_alerts(dfResLab)
+
+#Create dataframe to group alerts by sample
+alerts = dfResLab.groupby("CODIGO DE LA MUESTRA")["Alerta"].sum()
+alerts = (alerts != 0)
+alerts = alerts.to_frame()
+dfResLab_alerts = dfResLab.drop(["FAMILIA_MICROORGANISMO","HOSPILTAL", "IDENTIFICACION", 'FECHA DE NACIMIENTO', 'GENERO', "TIPO DE MUESTRA" , "RESISTENCIA", "LA CONCENTRACION MINIMA O MAX", 
+"NUMERO DE AISLAMIENTO", "THM" ,"APB (boronico)", "EDTA (si son positivas o negativas)", "BACTERIA_HONGO", "ORDEN_MICROORGANISMO", "GRAM_MICROORGANISMO", "ANTIBIÓTICO_ANTIMICÓTICO", 
+"GRUPO_MEDICAMENTO", "PISO"], axis=1, inplace = True)
+df_alerts = dfResLab_alerts.join(alerts, lsuffix='_left', rsuffix='1')
+df_alerts = df_alerts.reset_index()
+df_alerts.drop(["Alerta_left"], axis=1, inplace = True)
 
 #Dataframes for demograpichs graphs
 dfDemo = dfResLab[["AÑO DE TOMA DE MUESTRA", "GENERO", "EDAD", "IDENTIFICACION"]].groupby(by=["AÑO DE TOMA DE MUESTRA", "GENERO", 
 "EDAD"], dropna=False).nunique().reset_index()
-
-#Create alerts in accordance to hospital codings
-dfResLab["ALERTAS"] = create_alerts(dfResLab)
 
 #Function to generate demographics graphs
 def demo_graph_generator(year, gender, age):
@@ -151,6 +163,11 @@ def micro_map_generator(year, variable1, variable2):
         )
     
     return micro_map
+
+#Function to update maps with alerts
+def alert_in_map(floor):
+    dfResLab_alerts = dfResLab[["CODIGO_SALA", "ALERTAS", "CODIGO DE LA MUESTRA"]].groupby("CODIGO_SALA")
+    generate_map(dfResLab_alerts, floor)
 
 
     

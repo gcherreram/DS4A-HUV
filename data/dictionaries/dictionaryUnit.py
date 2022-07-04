@@ -17,7 +17,7 @@ dic_floor_unit = dic_floor_unit.get('Piso')
 #Create dictionary to assign codes to hospital units
 dic_code_unit = (dic_unit[['Sala','Codigo']]).set_index('Sala')
 dic_code_unit = dic_code_unit.to_dict()
-dic_code_unit = dic_code_unit('Codigo')
+dic_code_unit = dic_code_unit.get('Codigo')
 
 list_dicts = {"dic_rename_unit": dic_rename_unit, "dic_floor_unit":dic_floor_unit, "dic_code_unit":dic_code_unit}
 
