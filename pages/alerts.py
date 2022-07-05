@@ -16,14 +16,14 @@ register_page(__name__, path="/alerts", name= "Alertas",
 demographics_card = sidecard("Demografía", "Perfil de los Pacientes", "/demographics")
 infections_card = sidecard("Infecciones", "Perfil de los Microorganismos", "/infections")
 alerts_card = sidecard("Alertas", "Histórico de Alertas por IAAS", "/alerts")
-earlyalerts_card = sidecard("Alertas Tempranas", "Modelo de Alertas Tempranas", "/modelalerts")
+earlyalerts_card = sidecard("Modelo", "Modelo de Alertas Tempranas", "/modelalerts")
 
 #Generate page content
 
 content_alerts = dbc.Container([
     dbc.Card([
     dbc.CardBody([
-        html.H6("Alertas por piso"),
+        html.H3("Alertas por piso", style={'textAlign': 'center', "font-weight":"bold"}),
         dbc.Row(dcc.Dropdown(["Primer Piso", "Segundo Piso", "Tercer Piso", "Cuarto Piso", "Quinto Piso", "Sexto Piso"], 
             value='Perimer Piso', id="map_dropdown")),
         dbc.Row(dcc.Graph(figure=alert_in_map("Primer Piso"), id='alert_map_figure2')

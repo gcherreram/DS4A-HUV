@@ -37,7 +37,7 @@ content_demo2 = dbc.Container([
 demographics_card = sidecard("Demografía", "Perfil de los Pacientes", "/demographics")
 infections_card = sidecard("Infecciones", "Perfil de los Microorganismos", "/infections")
 alerts_card = sidecard("Alertas", "Histórico de Alertas por IAAS", "/alerts")
-earlyalerts_card = sidecard("Alertas Tempranas", "Modelo de Alertas Tempranas", "/modelalerts")
+earlyalerts_card = sidecard("Modelo", "Modelo de Alertas Tempranas", "/modelalerts")
 
 #Define layout
 layout = html.Div([

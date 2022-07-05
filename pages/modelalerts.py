@@ -16,7 +16,7 @@ register_page(__name__, path="/modelalerts", name= "Modelo",
 demographics_card = sidecard("Demografía", "Perfil de los Pacientes", "/demographics")
 infections_card = sidecard("Infecciones", "Perfil de los Microorganismos", "/infections")
 alerts_card = sidecard("Alertas", "Histórico de Alertas por IAAS", "/alerts")
-earlyalerts_card = sidecard("Alertas Tempranas", "Modelo de Alertas Tempranas", "/modelalerts")
+earlyalerts_card = sidecard("Modelo", "Modelo de Alertas Tempranas", "/modelalerts")
 
 #Generate page content
 content_alerts = dbc.Container([])
