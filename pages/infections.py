@@ -19,15 +19,17 @@ alerts_card = sidecard("Alertas", "Histórico de Alertas por IAAS", "/alerts")
 earlyalerts_card = sidecard("Alertas Tempranas", "Modelo de Alertas Tempranas", "/modelalerts")
 
 #Generate page content
-content_infections1 = dbc.Container([             
-    dcc.Dropdown(['Microorganismos', 'Familias de Microorganismos', 'Medicamentos', 'Bacteria/Hongo'], 
+content_infections1 = dbc.Card([
+    dbc.CardBody([
+        dcc.Dropdown(['Microorganismos', 'Familias de Microorganismos', 'Medicamentos', 'Bacteria/Hongo'], 
             "Microorganisms", id='fig2_dropdown', placeholder="Seleccione un gráfica"),
-    dcc.Graph(figure=micro_graph_generator("MICROORGANISMO"), id='microorganisms_figure'),                          
+        dcc.Graph(figure=micro_graph_generator("MICROORGANISMO"), id='microorganisms_figure'),
+    ])                                       
 ])
 
 content_infections2 = dbc.Card([
     dbc.CardBody([
-        html.H6("Familia Microorganismo por Piso"),
+        html.H4("Familia Microorganismo por Piso", style={'textAlign': 'center', "font-weight":"bold"}),
         dbc.Row(dcc.Slider(min=2013, max=2021, step=1, value=2013, id='micro_map_slider1',
             marks={
                 2013:{"label":"2013"}, 
@@ -38,13 +40,13 @@ content_infections2 = dbc.Card([
             )),
         dbc.Row(dcc.Graph(figure=micro_map_generator("Todos", "FAMILIA_MICROORGANISMO", 
             "PISO"), id='micro_map_figure1'
-        ), justify="center"),
+        )),
     ])
 ])
     
 content_infections3 = dbc.Card([
     dbc.CardBody([
-        html.H6("Familia Microorganismo por Resistencia Antibiótica"),
+        html.H4("Familia Microorganismo por Resistencia Antibiótica", style={'textAlign': 'center', "font-weight":"bold"}),
         dbc.Row(dcc.Slider(min=2013, max=2021, step=1, value=2013, id='micro_map_slider2',
             marks={
                 2013:{"label":"2013"}, 

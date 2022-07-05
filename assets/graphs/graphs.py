@@ -9,6 +9,10 @@ import json
 import plotly.graph_objects as go
 from dash_bootstrap_templates import load_figure_template
 
+#Set display options
+pd.set_option('display.max_rows', 100)
+pd.set_option('display.max_columns', 100)
+
 #Import own functions
 from assets.graphs.alertgenerator import create_alerts
 from assets.maps.mapgenerator import generate_map
@@ -95,11 +99,11 @@ def demo_graph_generator(year, gender, age):
         dfDemo1 = dfDemo1[dfDemo1["AÑO DE TOMA DE MUESTRA"]==year]
     if gender!="Todos":
         dfDemo1 = dfDemo1[dfDemo1["GENERO"]==gender]
-    dfDemo1 = dfDemo1[dfDemo1["EDAD"].isin(age)]
-    dfDemo1.rename({"EDAD":"Edad", "GENERO":"Género", "IDENTIFICACION":"Frecuencia"}, axis=1, inplace=True)
-    dfDemo1.sort_values(by="Frecuencia", ascending=True, inplace=True)
+    dfDemo2 = dfDemo1[dfDemo1["EDAD"].isin(age)].copy()
+    dfDemo2.rename({"EDAD":"Edad", "GENERO":"Género", "IDENTIFICACION":"Frecuencia"}, axis=1, inplace=True)
+    dfDemo2 = dfDemo2.sort_values(by="Frecuencia", ascending=True)
     demo_graph = px.bar(
-        dfDemo1,
+        dfDemo2,
         y = "Frecuencia",
         x = "Edad",
         color = "Género",    
