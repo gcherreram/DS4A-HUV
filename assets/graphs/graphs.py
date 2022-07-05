@@ -11,6 +11,7 @@ from dash_bootstrap_templates import load_figure_template
 
 #Import own functions
 from assets.graphs.alertgenerator import create_alerts
+from assets.maps.mapgenerator import generate_map
 
 #Set graph template
 load_figure_template("cosmo")
@@ -51,34 +52,37 @@ dfResLab['GRAM_MICROORGANISMO'] = dictTransform(dfResLab["MICROORGANISMO"], "dic
 
 #Update medicament names and add classification by families
 dfResLab['ANTIBIOTICO'] = dictTransform(dfResLab['ANTIBIOTICO'], "dic_rename_antibiotic")
+#Eliminate records of antibiotics that were not precisely identified
+df_eliminate2=dfResLab[dfResLab['ANTIBIOTICO']=='Eliminar'].index
+dfResLab=dfResLab.drop(df_eliminate2)
 dfResLab['FAMILIA_ANTIBIOTICO'] = dictTransform(dfResLab['ANTIBIOTICO'], "dic_family_antibiotic")
 dfResLab['TIPO_ANTIBIOTICO'] = dictTransform(dfResLab['ANTIBIOTICO'], "dic_type_antibiotic")
 
 #Standardize hospital units, add unit code and classify by floor 
 dfResLab['SALA'] = dictTransformUnit(dfResLab['SALA'], "dic_rename_unit")
-df_eliminate=dfResLab[dfResLab['SALA']=='eliminar'].index
-dfResLab=dfResLab.drop(df_eliminate)
+df_eliminate3=dfResLab[dfResLab['SALA']=='eliminar'].index
+dfResLab=dfResLab.drop(df_eliminate3)
 dfResLab['CODIGO_SALA'] = dictTransformUnit(dfResLab['SALA'], "dic_code_unit")
 dfResLab['PISO'] = dictTransformUnit(dfResLab['SALA'], "dic_floor_unit")
 
 #Simplify resistance level name
 dfResLab["RESISTENCIA"] = dfResLab['SENSIBLE / RESISTENTE / INTERMEDIO']
+dfResLab.drop('SENSIBLE / RESISTENTE / INTERMEDIO', axis=1, inplace=True)
 #Standardize resistance level values
 dfResLab["RESISTENCIA"].rename({"SIN ESPECIFICAR":"X","N":"R"}, axis=0, inplace=True)
 
 #Create alert variable in accordance to hospital codings
-dfResLab["ALERTAS"] = create_alerts(dfResLab)
+alerts_count = create_alerts(dfResLab)
 
 #Create dataframe to group alerts by sample
-alerts = dfResLab.groupby("CODIGO DE LA MUESTRA")["Alerta"].sum()
+alerts = dfResLab.groupby("CODIGO DE LA MUESTRA")["ALERTA"].sum()
 alerts = (alerts != 0)
 alerts = alerts.to_frame()
 dfResLab_alerts = dfResLab.copy()
-dfResLab_alerts = dfResLab_alerts.drop(["FAMILIA_MICROORGANISMO","HOSPILTAL", "IDENTIFICACION", 'FECHA DE NACIMIENTO', 'GENERO', "TIPO DE MUESTRA" , "RESISTENCIA", "LA CONCENTRACION MINIMA O MAX", 
-"NUMERO DE AISLAMIENTO", "THM" ,"APB (boronico)", "EDTA (si son positivas o negativas)", "BACTERIA_HONGO", "ORDEN_MICROORGANISMO", "GRAM_MICROORGANISMO", "PISO"], axis=1)
-df_alerts = dfResLab_alerts.join(alerts, lsuffix='_left', rsuffix='1')
-df_alerts = df_alerts.reset_index()
-df_alerts.drop(["Alerta_left"], axis=1, inplace = True)
+dfResLab_alerts = dfResLab_alerts.drop(['FECHA DE NACIMIENTO', 'GENERO', 'TIPO DE MUESTRA', 'LA CONCENTRACION MINIMA O MAX',
+       'HOSPILTAL', 'NUMERO DE AISLAMIENTO', 'ESBL (+ es blee )', 'THM', 'APB (boronico)', 'EDTA (si son positivas o negativas)', 'EDAD',
+       'AÑO DE TOMA DE MUESTRA', 'BACTERIA_HONGO', 'ORDEN_MICROORGANISMO', 'GRAM_MICROORGANISMO', 'FAMILIA_ANTIBIOTICO',
+       'TIPO_ANTIBIOTICO'], axis=1)
 
 #Dataframes for demograpichs graphs
 dfDemo = dfResLab[["AÑO DE TOMA DE MUESTRA", "GENERO", "EDAD", "IDENTIFICACION"]].groupby(by=["AÑO DE TOMA DE MUESTRA", "GENERO", 
@@ -167,8 +171,17 @@ def micro_map_generator(year, variable1, variable2):
 
 #Function to update maps with alerts
 def alert_in_map(floor):
-    dfResLab_alerts = dfResLab[["CODIGO_SALA", "ALERTAS", "CODIGO DE LA MUESTRA"]].groupby("CODIGO_SALA")
-    generate_map(dfResLab_alerts, floor)
+    df_alerts = []
+    df_alerts = dfResLab_alerts.join(alerts, lsuffix='_left', rsuffix='_right')
+    df_alerts = df_alerts.reset_index()
+    df_alerts.drop(["ALERTA_right"], axis=1, inplace = True)
+    df_alerts.rename({"ALERTA_left":"ALERTA"}, axis=1, inplace=True)
+    df_alerts_unit = df_alerts[["CODIGO_SALA", "SALA", "ALERTA", "CODIGO DE LA MUESTRA"]].groupby(by=["CODIGO_SALA", "SALA", "ALERTA"]).nunique().reset_index()
+    df_alerts_unit = df_alerts_unit[df_alerts_unit["ALERTA"]==1]
+    df_alerts_unit.sort_values(by="CODIGO DE LA MUESTRA", ascending=False)
+    df_alerts_unit.rename({"CODIGO_SALA":"ID", "SALA":"NAME", "CODIGO DE LA MUESTRA":"CASOS"}, axis=1, inplace=True)
+    floor_map = generate_map(df_alerts_unit, floor)
 
+    return floor_map
 
     
