@@ -81,7 +81,7 @@ alerts = alerts.to_frame()
 dfResLab_alerts = dfResLab.copy()
 dfResLab_alerts = dfResLab_alerts.drop(['FECHA DE NACIMIENTO', 'GENERO', 'TIPO DE MUESTRA', 'LA CONCENTRACION MINIMA O MAX',
        'HOSPILTAL', 'NUMERO DE AISLAMIENTO', 'ESBL (+ es blee )', 'THM', 'APB (boronico)', 'EDTA (si son positivas o negativas)', 'EDAD',
-       'AÑO DE TOMA DE MUESTRA', 'BACTERIA_HONGO', 'ORDEN_MICROORGANISMO', 'GRAM_MICROORGANISMO', 'FAMILIA_ANTIBIOTICO',
+       'BACTERIA_HONGO', 'ORDEN_MICROORGANISMO', 'GRAM_MICROORGANISMO', 'FAMILIA_ANTIBIOTICO',
        'TIPO_ANTIBIOTICO'], axis=1)
 
 #Dataframes for demograpichs graphs
@@ -183,5 +183,36 @@ def alert_in_map(floor):
     floor_map = generate_map(df_alerts_unit, floor)
 
     return floor_map
+
+#Function to generate microorganisms heatmaps
+def alert_heatmap_generator(year):
+       
+    df_alerts = []
+    df_alerts = dfResLab_alerts.join(alerts, lsuffix='_left', rsuffix='_right')
+    df_alerts = df_alerts.reset_index()
+    df_alerts.drop(["ALERTA_right"], axis=1, inplace = True)
+    df_alerts.rename({"ALERTA_left":"ALERTA"}, axis=1, inplace=True)
+    df_alerts["MES DE LA MUESTRA"] = df_alerts["FECHA DE TOMA DE MUESTRA"].dt.month
+    df_alerts_unit = df_alerts[["SALA", "ALERTA", "CODIGO DE LA MUESTRA", "AÑO DE TOMA DE MUESTRA", 
+    "MES DE LA MUESTRA"]].groupby(by=["SALA", "ALERTA", "AÑO DE TOMA DE MUESTRA", 
+    "MES DE LA MUESTRA"]).nunique().reset_index()
+    df_alerts_unit = df_alerts_unit[df_alerts_unit["ALERTA"]==1]
+    df_alerts_unit.sort_values(by="CODIGO DE LA MUESTRA", ascending=False)
+    
+    if year == "Todos":
+        table_alert_unit = pd.crosstab(index=df_alerts_unit["SALA"], 
+            columns=df_alerts_unit["AÑO DE TOMA DE MUESTRA"], normalize="index", dropna=False)*100
+        
+    else:
+        df_alerts_unit = df_alerts_unit[df_alerts_unit["AÑO DE TOMA DE MUESTRA"] == year]
+        table_alert_unit = pd.crosstab(index=df_alerts_unit["SALA"], 
+            columns=df_alerts_unit["MES DE LA MUESTRA"], normalize="index", dropna=False)*100
+            
+    alert_heatmap = px.imshow(
+        table_alert_unit, 
+        color_continuous_scale="reds"
+        )
+    
+    return alert_heatmap
 
     

@@ -6,6 +6,7 @@ from dash_labs.plugins import register_page
 
 #Own functions
 from components.cards.sidecard import sidecard
+from assets.graphs.graphs import alert_heatmap_generator
 from assets.graphs.graphs import alert_in_map
 
 #Add alerts to page registry
@@ -20,13 +21,31 @@ earlyalerts_card = sidecard("Modelo", "Modelo de Alertas Tempranas", "/modelaler
 
 #Generate page content
 
-content_alerts = dbc.Container([
+content_alerts1 = dbc.Container([
     dbc.Card([
     dbc.CardBody([
         html.H3("Alertas por piso", style={'textAlign': 'center', "font-weight":"bold"}),
         dbc.Row(dcc.Dropdown(["Primer Piso", "Segundo Piso", "Tercer Piso", "Cuarto Piso", "Quinto Piso", "Sexto Piso"], 
-            value='Perimer Piso', id="map_dropdown")),
-        dbc.Row(dcc.Graph(figure=alert_in_map("Primer Piso"), id='alert_map_figure2')
+            value='Perimer Piso', id="alert_map_dropdown")),
+        dbc.Row(dcc.Graph(figure=alert_in_map("Primer Piso"), id='alert_map_figure1')
+            ,justify="center"),
+        ])
+    ])
+])
+
+content_alerts2 = dbc.Container([
+    dbc.Card([
+    dbc.CardBody([
+        html.H3("Histórico de Alertas", style={'textAlign': 'center', "font-weight":"bold"}),
+        dbc.Row(dcc.Slider(min=2013, max=2021, step=1, value=2013, id='alert_map_slider',
+            marks={
+                2013:{"label":"2013"}, 
+                2015:{"label":"2015"},
+                2017:{"label":"2017"},
+                2019:{"label":"2019"},
+                2021:{"label":"2021"},}
+            )),
+        dbc.Row(dcc.Graph(figure=alert_heatmap_generator("Todos"), id='alert_map_figure2')
             ,justify="center"),
         ])
     ])
@@ -45,7 +64,15 @@ layout = html.Div(
             dbc.Row(earlyalerts_card),
         ], width=2,
         ),
-        dbc.Col(content_alerts),
+        dbc.Col([
+            dbc.Row(html.H3("Alertas por IAAS en el HUV", 
+            style={'textAlign': 'center', "font-weight":"bold"}, id="subtitle")),  
+            dbc.Tabs([
+                dbc.Tab(content_alerts1, label="Mapa por piso"),           
+                dbc.Tab(content_alerts2, label="Histórico"),
+                ])                                    
+        
+        ]),
     ],
     align="start",
     justify="between"
@@ -55,8 +82,8 @@ layout = html.Div(
 
 #Callbacks
 @callback(
-    [Output('alert_map_figure2', 'figure')], 
-    [Input('map_dropdown', 'value')],
+    [Output('alert_map_figure1', 'figure')], 
+    [Input('alert_map_dropdown', 'value')],
     prevent_initial_call=True)
 
 def map_dropdown_interaction(dropdown_val):
@@ -75,4 +102,14 @@ def map_dropdown_interaction(dropdown_val):
         selected_floor = "sixth"
 
     figure=alert_in_map(selected_floor)
+    return [figure]
+
+
+@callback(
+    [Output('alert_map_figure2', 'figure')], 
+    [Input('alert_map_slider', 'value')],
+    prevent_initial_call=True)
+
+def map_slider_interaction(slider_val):
+    figure=alert_heatmap_generator(slider_val)
     return [figure]

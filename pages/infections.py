@@ -121,6 +121,7 @@ def slider1_interaction(slider_val):
     prevent_initial_call=True)
 
 def slider2_interaction(slider_val):
+    
     figure = micro_map_generator(slider_val,"FAMILIA_MICROORGANISMO", "RESISTENCIA")
     return [figure]
 
