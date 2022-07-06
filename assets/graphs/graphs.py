@@ -216,11 +216,10 @@ def alert_heatmap_generator(year):
             colorscale='Reds'))
         
     else:
-        df_alerts_unit = df_alerts[["SALA", "ALERTA", "CODIGO DE LA MUESTRA", "AÑO DE TOMA DE MUESTRA", 
+        df_alerts_unit = df_alerts[df_alerts_unit["AÑO DE TOMA DE MUESTRA"] == year][["SALA", "ALERTA", "CODIGO DE LA MUESTRA", "AÑO DE TOMA DE MUESTRA", 
             "MES DE LA MUESTRA"]].groupby(by=["SALA", "ALERTA", "AÑO DE TOMA DE MUESTRA", 
             "MES DE LA MUESTRA"]).nunique().reset_index()
         df_alerts_unit = df_alerts_unit[df_alerts_unit["ALERTA"]==1]
-        df_alerts_unit = df_alerts_unit[df_alerts_unit["AÑO DE TOMA DE MUESTRA"] == year]
         table_alert_unit = pd.crosstab(index=df_alerts_unit["MES DE LA MUESTRA"], 
             columns=df_alerts_unit["SALA"], dropna=False)
     
