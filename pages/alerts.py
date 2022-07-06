@@ -11,7 +11,7 @@ from assets.graphs.graphs import alert_in_map
 
 #Add alerts to page registry
 register_page(__name__, path="/alerts", name= "Alertas", 
-    title="Dashboard para el monitoreo de IAAS en el HUV - Alertas", order=4)
+    title="Dashboard para el monitoreo de IAAS en el HUV - Alertas", order=2)
 
 #Side menu cards
 demographics_card = sidecard("Demografía", "Perfil de los Pacientes", "/demographics")

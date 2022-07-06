@@ -160,11 +160,11 @@ def micro_map_generator(year, variable1, variable2):
     variable1, variable2]).nunique().reset_index()
         
     if year == "Todos":
-        table_micro_unit = pd.crosstab(index=dfMicro1[variable1], columns=dfMicro1[variable2], normalize="index", dropna=False)*100
+        table_micro_unit = pd.crosstab(index=dfMicro1[variable1], columns=dfMicro1[variable2], dropna=False)
         
     else:
         dfMicro2 = dfMicro1[dfMicro1["AÑO DE TOMA DE MUESTRA"] == year]
-        table_micro_unit = pd.crosstab(index=dfMicro2[variable1], columns=dfMicro2[variable2], normalize="index", dropna=False)*100
+        table_micro_unit = pd.crosstab(index=dfMicro2[variable1], columns=dfMicro2[variable2], dropna=False)
             
     micro_map = px.imshow(
         table_micro_unit, 
@@ -205,12 +205,12 @@ def alert_heatmap_generator(year):
     
     if year == "Todos":
         table_alert_unit = pd.crosstab(index=df_alerts_unit["SALA"], 
-            columns=df_alerts_unit["AÑO DE TOMA DE MUESTRA"], normalize="index", dropna=False)*100
+            columns=df_alerts_unit["AÑO DE TOMA DE MUESTRA"], dropna=False)
         
     else:
         df_alerts_unit = df_alerts_unit[df_alerts_unit["AÑO DE TOMA DE MUESTRA"] == year]
         table_alert_unit = pd.crosstab(index=df_alerts_unit["SALA"], 
-            columns=df_alerts_unit["MES DE LA MUESTRA"], normalize="index", dropna=False)*100
+            columns=df_alerts_unit["MES DE LA MUESTRA"], dropna=False)
             
     alert_heatmap = px.imshow(
         table_alert_unit, 

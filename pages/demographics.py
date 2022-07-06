@@ -10,7 +10,7 @@ from assets.graphs.graphs import demo_graph_generator
 
 #Add demographics to page registry
 register_page(__name__, path="/demographics", name="Demografia", 
-    title="Dashboard para el monitoreo de IAAS en el HUV - Demografía", order=2)
+    title="Dashboard para el monitoreo de IAAS en el HUV - Demografía", order=3)
 
 #Logos
 HUV_logoII = "https://huv.gov.co/wp-content/uploads/2020/06/logo-HU_Horizontal_Azul.png"
