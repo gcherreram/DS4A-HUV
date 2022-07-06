@@ -1,0 +1,17 @@
+Revert "Update requirements.txt"
+error al actualizar 
+This reverts commit c5cd2d74b43ec704aedc3b41ece586a529014c9e.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch Test
+# Your branch is ahead of 'origin/Test' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   requirements.txt
+#
+# Untracked files:
+#	"\357\200\272"
+#
