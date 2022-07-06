@@ -53,6 +53,7 @@ dfResLab["BACTERIA_HONGO"] = dictTransform(dfResLab["MICROORGANISMO"], "dic_bact
 dfResLab['FAMILIA_MICROORGANISMO'] = dictTransform(dfResLab["MICROORGANISMO"], "dic_family_microorganism")
 dfResLab['ORDEN_MICROORGANISMO'] = dictTransform(dfResLab["MICROORGANISMO"], "dic_order_microorganism")
 dfResLab['GRAM_MICROORGANISMO'] = dictTransform(dfResLab["MICROORGANISMO"], "dic_gram_microorganism")
+dfResLab["FORMA"] = dictTransform(dfResLab["MICROORGANISMO"], "dic_shape_microorganism")
 
 #Update medicament names and add classification by families
 dfResLab['ANTIBIOTICO'] = dictTransform(dfResLab['ANTIBIOTICO'], "dic_rename_antibiotic")
@@ -66,6 +67,8 @@ dfResLab['TIPO_ANTIBIOTICO'] = dictTransform(dfResLab['ANTIBIOTICO'], "dic_type_
 dfResLab['SALA'] = dictTransformUnit(dfResLab['SALA'], "dic_rename_unit")
 df_eliminate3=dfResLab[dfResLab['SALA']=='eliminar'].index
 dfResLab=dfResLab.drop(df_eliminate3)
+df_eliminate4=dfResLab[dfResLab['SALA']=='externo'].index
+dfResLab=dfResLab.drop(df_eliminate4)
 dfResLab['CODIGO_SALA'] = dictTransformUnit(dfResLab['SALA'], "dic_code_unit")
 dfResLab['PISO'] = dictTransformUnit(dfResLab['SALA'], "dic_floor_unit")
 
@@ -88,7 +91,7 @@ dfResLab_alerts = dfResLab.copy()
 dfResLab_alerts = dfResLab_alerts.drop(['FECHA DE NACIMIENTO', 'GENERO', 'TIPO DE MUESTRA', 'LA CONCENTRACION MINIMA O MAX',
        'HOSPILTAL', 'NUMERO DE AISLAMIENTO', 'ESBL (+ es blee )', 'THM', 'APB (boronico)', 'EDTA (si son positivas o negativas)', 'EDAD',
        'BACTERIA_HONGO', 'ORDEN_MICROORGANISMO', 'GRAM_MICROORGANISMO', 'FAMILIA_ANTIBIOTICO',
-       'TIPO_ANTIBIOTICO'], axis=1)
+       'TIPO_ANTIBIOTICO', "FORMA"], axis=1)
 
 #Dataframes for demograpichs graphs
 dfDemo = dfResLab[["AÑO DE TOMA DE MUESTRA", "GENERO", "EDAD", "IDENTIFICACION"]].groupby(by=["AÑO DE TOMA DE MUESTRA", "GENERO", 

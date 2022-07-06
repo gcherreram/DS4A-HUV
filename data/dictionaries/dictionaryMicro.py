@@ -30,6 +30,11 @@ dic_gram_microorganism = (dic_micro[['Microorganismos','Gram/Hongo']]).set_index
 dic_gram_microorganism = dic_gram_microorganism.to_dict()
 dic_gram_microorganism = dic_gram_microorganism.get('Gram/Hongo')
 
+#Create dictionary to clasify bacteria between gram positive and gram negative, and label fungus
+dic_shape_microorganism = (dic_micro[['Microorganismos','Forma']]).set_index('Microorganismos')
+dic_shape_microorganism = dic_shape_microorganism.to_dict()
+dic_shape_microorganism = dic_shape_microorganism.get('Forma')
+
 #Create dictionary to update medicaments
 dic_rename_antibiotic = (dic_medicamento[['Medicamento-HUV','Medicamento']]).set_index('Medicamento-HUV')
 dic_rename_antibiotic = dic_rename_antibiotic.to_dict()
@@ -50,6 +55,7 @@ list_dicts = {"dic_rename_micro":dic_rename_micro,
         "dic_family_microorganism":dic_family_microorganism,
         "dic_order_microorganism":dic_order_microorganism,
         "dic_gram_microorganism":dic_gram_microorganism,
+        "dic_shape_microorganism":dic_gram_microorganism,
         "dic_rename_antibiotic":dic_rename_antibiotic,
         "dic_family_antibiotic":dic_family_antibiotic,
         "dic_type_antibiotic":dic_family_antibiotic
