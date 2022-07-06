@@ -20,7 +20,7 @@ content_home=  dbc.Container([
         dbc.Col([
             dbc.Card([
                 dbc.CardImg(),
-                dbc.CardHeader("Sobre las IAAs"),
+                dbc.CardHeader("Sobre las IAAs", style={'textAlign': 'center', "font-weight":"bold"}),
                 dbc.CardBody(
                     html.P("""Una infección asociada a la atención de la salud (IAAs) es aquella que ocurre en un paciente en un escenario de atención 
                     de salud y que no estaba presente en el momento de la admisión."""),
@@ -30,7 +30,7 @@ content_home=  dbc.Container([
         dbc.Col([
             dbc.Card([
                 dbc.CardImg(),
-                dbc.CardHeader("Sobre este dashboard"),
+                dbc.CardHeader("Sobre este dashboard", style={'textAlign': 'center', "font-weight":"bold"}),
                 dbc.CardBody(
                         html.P("""Este dashboard presenta una caracterización de la IAAs en el HUV del valle entre 2013 (septiembre) y 2021.
                         Fue desarrollado por el Equipo 237 con la intencón de ofrecer una herramienta para la toma de decisiones en el HUV"""),
@@ -41,9 +41,9 @@ content_home=  dbc.Container([
     dbc.Row([
         dbc.Col([
             dbc.Card([
-                dbc.CardImg(src="assets/images/HospitalLogoWhite.png", class_name="w-50"),
+                dbc.CardImg(src="assets/images/HospitalLogoWhite.png"),
                 dbc.CardBody(
-                    html.P("Las bases de datos empleadas para este análisis son propiedad del HUV"),
+                    html.P("Las bases de datos empleadas para este análisis son propiedad del HUV", style={'textAlign': 'center'}),
                 ),
             ]),
         ]),
@@ -52,7 +52,7 @@ content_home=  dbc.Container([
                 dbc.CardImg(src="assets/images/DS4AColombiaLogo.png", class_name="w-50"),
                 dbc.CardBody(
                     html.P("""Esta aplicación es es resultado de nuestros aprendizajes en el curso DS4A Colombia 
-                    ofrecido por Correlation One, en asocio con MinTIC""")
+                    ofrecido por Correlation One, en asocio con MinTIC""", style={'textAlign': 'center'})
                 )
             ]),
         ]),
