@@ -29,7 +29,7 @@ content_infections1 = dbc.Card([
 
 content_infections2 = dbc.Card([
     dbc.CardBody([
-        html.H4("Familia Microorganismo por Piso", style={'textAlign': 'center', "font-weight":"bold"}),
+        html.H6("Familia Microorganismo por Piso", style={'textAlign': 'center', "font-weight":"bold"}),
         dbc.Row(dcc.Slider(min=2013, max=2021, step=1, value=2013, id='micro_map_slider1',
             marks={
                 2013:{"label":"2013"}, 
@@ -46,7 +46,7 @@ content_infections2 = dbc.Card([
     
 content_infections3 = dbc.Card([
     dbc.CardBody([
-        html.H4("Familia Microorganismo por Resistencia Antibiótica", style={'textAlign': 'center', "font-weight":"bold"}),
+        html.H6("Familia Microorganismo por Resistencia Antibiótica", style={'textAlign': 'center', "font-weight":"bold"}),
         dbc.Row(dcc.Slider(min=2013, max=2021, step=1, value=2013, id='micro_map_slider2',
             marks={
                 2013:{"label":"2013"}, 

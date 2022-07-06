@@ -73,7 +73,9 @@ dfResLab['PISO'] = dictTransformUnit(dfResLab['SALA'], "dic_floor_unit")
 dfResLab["RESISTENCIA"] = dfResLab['SENSIBLE / RESISTENTE / INTERMEDIO']
 dfResLab.drop('SENSIBLE / RESISTENTE / INTERMEDIO', axis=1, inplace=True)
 #Standardize resistance level values
-dfResLab["RESISTENCIA"].rename({"SIN ESPECIFICAR":"X","N":"R"}, axis=0, inplace=True)
+#dfResLab[dfResLab["RESISTENCIA"]=="SIN ESPECIFICAR"]["RESISTENCIA"] = "X"
+#dfResLab[dfResLab["RESISTENCIA"]=="N"]["RESISTENCIA"] = "I"
+dfResLab["RESISTENCIA"].replace({"SIN ESPECIFICAR":"X","N":"I"}, inplace=True)
 
 #Create alert variable in accordance to hospital codings
 alerts_count = create_alerts(dfResLab)
@@ -155,22 +157,23 @@ def micro_graph_generator(variable):
 
 #Function to generate microorganisms heatmaps
 def micro_map_generator(year, variable1, variable2):
-    
-    dfMicro1 = dfResLab[["AÑO DE TOMA DE MUESTRA", variable1, variable2, "CODIGO DE LA MUESTRA"]].groupby(by=["AÑO DE TOMA DE MUESTRA", 
-    variable1, variable2]).nunique().reset_index()
-        
+          
     if year == "Todos":
+        dfMicro1 = dfResLab[["AÑO DE TOMA DE MUESTRA", variable1, variable2, "CODIGO DE LA MUESTRA"]].groupby(by=["AÑO DE TOMA DE MUESTRA", 
+            variable1, variable2]).nunique().reset_index()
         table_micro_unit = pd.crosstab(index=dfMicro1[variable1], columns=dfMicro1[variable2], dropna=False)
         
     else:
-        dfMicro2 = dfMicro1[dfMicro1["AÑO DE TOMA DE MUESTRA"] == year]
-        table_micro_unit = pd.crosstab(index=dfMicro2[variable1], columns=dfMicro2[variable2], dropna=False)
-            
-    micro_map = px.imshow(
-        table_micro_unit, 
-        color_continuous_scale="purples"
-        )
+        dfMicro1 = dfResLab[dfResLab["AÑO DE TOMA DE MUESTRA"] == year][[variable1, variable2, 
+            "CODIGO DE LA MUESTRA"]].groupby(by=[variable1, variable2]).nunique().reset_index()        
+        table_micro_unit = pd.crosstab(index=dfMicro1[variable1], columns=dfMicro1[variable2], dropna=False)
     
+    micro_map = go.Figure(data=go.Heatmap(
+        z = table_micro_unit.stack(),
+        x = dfMicro1[variable1],
+        y = dfMicro1[variable2],
+        colorscale='Purples'))        
+   
     return micro_map
 
 #Function to update maps with alerts
@@ -180,7 +183,8 @@ def alert_in_map(floor):
     df_alerts = df_alerts.reset_index()
     df_alerts.drop(["ALERTA_right"], axis=1, inplace = True)
     df_alerts.rename({"ALERTA_left":"ALERTA"}, axis=1, inplace=True)
-    df_alerts_unit = df_alerts[["CODIGO_SALA", "SALA", "ALERTA", "CODIGO DE LA MUESTRA"]].groupby(by=["CODIGO_SALA", "SALA", "ALERTA"]).nunique().reset_index()
+    df_alerts_unit = df_alerts[["CODIGO_SALA", "SALA", "ALERTA", "CODIGO DE LA MUESTRA"]].groupby(by=["CODIGO_SALA", 
+        "SALA", "ALERTA"]).nunique().reset_index()
     df_alerts_unit = df_alerts_unit[df_alerts_unit["ALERTA"]==1]
     df_alerts_unit.sort_values(by="CODIGO DE LA MUESTRA", ascending=False)
     df_alerts_unit.rename({"CODIGO_SALA":"ID", "SALA":"NAME", "CODIGO DE LA MUESTRA":"CASOS"}, axis=1, inplace=True)
@@ -197,25 +201,39 @@ def alert_heatmap_generator(year):
     df_alerts.drop(["ALERTA_right"], axis=1, inplace = True)
     df_alerts.rename({"ALERTA_left":"ALERTA"}, axis=1, inplace=True)
     df_alerts["MES DE LA MUESTRA"] = df_alerts["FECHA DE TOMA DE MUESTRA"].dt.month
-    df_alerts_unit = df_alerts[["SALA", "ALERTA", "CODIGO DE LA MUESTRA", "AÑO DE TOMA DE MUESTRA", 
-    "MES DE LA MUESTRA"]].groupby(by=["SALA", "ALERTA", "AÑO DE TOMA DE MUESTRA", 
-    "MES DE LA MUESTRA"]).nunique().reset_index()
-    df_alerts_unit = df_alerts_unit[df_alerts_unit["ALERTA"]==1]
-    df_alerts_unit.sort_values(by="CODIGO DE LA MUESTRA", ascending=False)
-    
+        
     if year == "Todos":
-        table_alert_unit = pd.crosstab(index=df_alerts_unit["SALA"], 
-            columns=df_alerts_unit["AÑO DE TOMA DE MUESTRA"], dropna=False)
+        df_alerts_unit = df_alerts[["SALA", "ALERTA", "CODIGO DE LA MUESTRA", "AÑO DE TOMA DE MUESTRA"]].groupby(by=["SALA", 
+            "ALERTA", "AÑO DE TOMA DE MUESTRA"]).nunique().reset_index()
+        df_alerts_unit = df_alerts_unit[df_alerts_unit["ALERTA"]==1]
+        table_alert_unit = pd.crosstab(index=df_alerts_unit["AÑO DE TOMA DE MUESTRA"], 
+            columns=df_alerts_unit["SALA"], dropna=False)
+        
+        alert_heatmap = go.Figure(data=go.Heatmap(
+            z = table_alert_unit.stack(),
+            x = df_alerts_unit["AÑO DE TOMA DE MUESTRA"],
+            y = df_alerts_unit["SALA"],
+            colorscale='Reds'))
         
     else:
+        df_alerts_unit = df_alerts[["SALA", "ALERTA", "CODIGO DE LA MUESTRA", "AÑO DE TOMA DE MUESTRA", 
+            "MES DE LA MUESTRA"]].groupby(by=["SALA", "ALERTA", "AÑO DE TOMA DE MUESTRA", 
+            "MES DE LA MUESTRA"]).nunique().reset_index()
+        df_alerts_unit = df_alerts_unit[df_alerts_unit["ALERTA"]==1]
         df_alerts_unit = df_alerts_unit[df_alerts_unit["AÑO DE TOMA DE MUESTRA"] == year]
-        table_alert_unit = pd.crosstab(index=df_alerts_unit["SALA"], 
-            columns=df_alerts_unit["MES DE LA MUESTRA"], dropna=False)
+        table_alert_unit = pd.crosstab(index=df_alerts_unit["MES DE LA MUESTRA"], 
+            columns=df_alerts_unit["SALA"], dropna=False)
+    
+        alert_heatmap = go.Figure(data=go.Heatmap(
+            z = table_alert_unit.stack(),
+            x = df_alerts_unit["MES DE LA MUESTRA"],
+            y = df_alerts_unit["SALA"],
+            colorscale='Reds'))   
             
-    alert_heatmap = px.imshow(
+    """alert_heatmap = px.imshow(
         table_alert_unit, 
         color_continuous_scale="reds"
-        )
+        )"""
     
     return alert_heatmap
 

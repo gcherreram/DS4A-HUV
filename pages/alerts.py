@@ -36,7 +36,7 @@ content_alerts1 = dbc.Container([
 content_alerts2 = dbc.Container([
     dbc.Card([
     dbc.CardBody([
-        html.H4("Histórico de Alertas", style={'textAlign': 'center', "font-weight":"bold"}),
+        html.H6("Histórico de Alertas", style={'textAlign': 'center', "font-weight":"bold"}),
         dbc.Row(dcc.Slider(min=2013, max=2021, step=1, value=2013, id='alert_map_slider',
             marks={
                 2013:{"label":"2013"}, 
@@ -98,10 +98,13 @@ def map_dropdown_interaction(dropdown_val):
         selected_floor = "fourth"
     elif dropdown_val == "Quinto Piso":
         selected_floor = "fifth"
+    elif dropdown_val == "Sexto Piso":
+        selected_floor = "sixth"    
     else:
-        selected_floor = "sixth"
+        selected_floor = "first"
 
     figure=alert_in_map(selected_floor)
+
     return [figure]
 
 

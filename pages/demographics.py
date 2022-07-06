@@ -76,8 +76,8 @@ def update_demographics(selector_year, selector_gender, selector_age, n_clicks):
     if selector_gender == "Sin Especificar":
         selector_gender = "SIN ESPECIFICAR"
 
-    if selector_age == "Todos":
-        selector_age = list(range(0,120,1))
+    if selector_age == "Mayores de 60":
+        selector_age = list(range(60,120,1))
     elif selector_age == "Menores de 5 años":
         selector_age = list(range(0,5,1))
     elif selector_age == "Entre 5 y 17 años":
@@ -85,7 +85,7 @@ def update_demographics(selector_year, selector_gender, selector_age, n_clicks):
     elif selector_age == "Entre 18 y 60 años":
         selector_age = list(range(18,60,1))
     else:
-        selector_age = list(range(60,120,1))
+        selector_age = list(range(0,120,1))
 
     if n_clicks is not None:
         new_demographics_fig = demo_graph_generator(selector_year, selector_gender, selector_age)

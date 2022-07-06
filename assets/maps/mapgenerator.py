@@ -19,9 +19,12 @@ def generate_map(df, floor):
     elif floor == "fifth":
         map_file = "data/geojson/HUV piso 5.geojson"
         map_title = "Piso 5 - Alertas"
-    else:
+    elif floor == "sixth":
         map_file = "data/geojson/HUV piso 6.geojson"
         map_title = "Piso 6 - Alertas"
+    else:
+        map_file = "data/geojson/HUV piso 1.geojson"
+        map_title = "Piso 1 - Alertas"
     
     with open(map_file, encoding='utf-8') as json_file:
             areas = json.load(json_file)
