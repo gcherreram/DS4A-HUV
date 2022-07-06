@@ -66,7 +66,7 @@ content_about1=  dbc.Container([
                 ], justify="center"),
             dbc.Row([
                 dbc.Card([
-                    dbc.CardImg(src="assets/images/PortraitPlaceholder.png"),
+                    dbc.CardImg(src="assets/images/WilsonRangel.jpeg"),
                     dbc.CardBody("Wilson Rangel", style={'textAlign': 'center', "font-weight":"bold"}),
                     ], className="w-75 mb-3"),
                 ], justify="center"),
