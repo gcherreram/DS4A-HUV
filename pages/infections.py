@@ -29,7 +29,7 @@ content_infections1 = dbc.Card([
 
 content_infections2 = dbc.Card([
     dbc.CardBody([
-        html.H6("Familia Microorganismo por Piso", style={'textAlign': 'center', "font-weight":"bold"}),
+        html.H6("Top 20 Microorganismos por Piso", style={'textAlign': 'center', "font-weight":"bold"}),
         dbc.Row(dcc.Slider(min=2013, max=2021, step=1, value=2013, id='micro_map_slider1',
             marks={
                 2013:{"label":"2013"}, 
@@ -38,7 +38,7 @@ content_infections2 = dbc.Card([
                 2019:{"label":"2019"},
                 2021:{"label":"2021"},}
             )),
-        dbc.Row(dcc.Graph(figure=micro_map_generator("Todos", "FAMILIA_MICROORGANISMO", 
+        dbc.Row(dcc.Graph(figure=micro_map_generator("Todos", "MICROORGANISMO", 
             "PISO"), id='micro_map_figure1'
         )),
     ])
@@ -46,7 +46,7 @@ content_infections2 = dbc.Card([
     
 content_infections3 = dbc.Card([
     dbc.CardBody([
-        html.H6("Familia Microorganismo por Resistencia Antibiótica", style={'textAlign': 'center', "font-weight":"bold"}),
+        html.H6("Top 20 Microorganismos por Resistencia Antibiótica", style={'textAlign': 'center', "font-weight":"bold"}),
         dbc.Row(dcc.Slider(min=2013, max=2021, step=1, value=2013, id='micro_map_slider2',
             marks={
                 2013:{"label":"2013"}, 
@@ -55,7 +55,7 @@ content_infections3 = dbc.Card([
                 2019:{"label":"2019"},
                 2021:{"label":"2021"},}
             )),
-        dbc.Row(dcc.Graph(figure=micro_map_generator("Todos", "FAMILIA_MICROORGANISMO", 
+        dbc.Row(dcc.Graph(figure=micro_map_generator("Todos", "MICROORGANISMO", 
             "RESISTENCIA"), id='micro_map_figure2')
             ,justify="center"),
     ])
@@ -113,7 +113,7 @@ def dropdown_interaction(dropdown_val):
     prevent_initial_call=True)
 
 def slider1_interaction(slider_val):
-    figure=micro_map_generator(slider_val,"FAMILIA_MICROORGANISMO", "PISO")
+    figure=micro_map_generator(slider_val,"MICROORGANISMO", "PISO")
     return [figure]
 
 
@@ -124,6 +124,6 @@ def slider1_interaction(slider_val):
 
 def slider2_interaction(slider_val):
     
-    figure = micro_map_generator(slider_val,"FAMILIA_MICROORGANISMO", "RESISTENCIA")
+    figure = micro_map_generator(slider_val,"MICROORGANISMO", "RESISTENCIA")
     return [figure]
 
