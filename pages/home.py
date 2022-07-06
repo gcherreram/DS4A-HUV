@@ -14,17 +14,49 @@ register_page(__name__, path="/", name="Inicio", title="Dashboard para el monito
 #Define content
 content_home=  dbc.Container([
 
-    dbc.Row(html.H3("Infecciones por Atención en Salud Hospital Universitario Evaristo García E.S.E.", 
+    dbc.Row(html.H3("Infecciones por Atención en el Salud Hospital Universitario Evaristo García E.S.E.", 
         style={'textAlign': 'center', "font-weight":"bold"})),
-    dbc.Row(
-        html.P("""En el sector de la salud, los pacientes pueden desarrollar infecciones mientras reciben atención por otras condiciones. 
-        Estas infecciones, que incluso pueden provocar la muerte, se conocen comúnmente como infecciones asociadas a la atención de salud
-        (IAAS) y pueden ocurrir en cualquier lugar de atención médica, incluidos hospitales y otros centros médicos. 
-        Las IAAS más comunes son infecciones en sitios de procedimientos quirúrgicos, infecciones asociadas con el uso de ventiladores 
-        mecánicos o catéteres urinarios e infecciones en los puntos de acceso venoso.""")
-    ),
-    dbc.Row(html.Img(src="assets/images/HospitalLogoWhite.png")),
-
+    dbc.Row([
+        dbc.Col([
+            dbc.Card([
+                dbc.CardImg(),
+                dbc.CardHeader("Sobre las IAAs"),
+                dbc.CardBody(
+                    html.P("""Una infección asociada a la atención de la salud (IAAs) es aquella que ocurre en un paciente en un escenario de atención 
+                    de salud y que no estaba presente en el momento de la admisión."""),
+                ),
+            ]),
+        ]),
+        dbc.Col([
+            dbc.Card([
+                dbc.CardImg(),
+                dbc.CardHeader("Sobre este dashboard"),
+                dbc.CardBody(
+                        html.P("""Este dashboard presenta una caracterización de la IAAs en el HUV del valle entre 2013 (septiembre) y 2021.
+                        Fue desarrollado por el Equipo 237 con la intencón de ofrecer una herramienta para la toma de decisiones en el HUV"""),
+                ),
+            ]),
+        ]),   
+    ]),
+    dbc.Row([
+        dbc.Col([
+            dbc.Card([
+                dbc.CardImg(src="assets/images/HospitalLogoWhite.png", class_name="w-50"),
+                dbc.CardBody(
+                    html.P("Las bases de datos empleadas para este análisis son propiedad del HUV"),
+                ),
+            ]),
+        ]),
+        dbc.Col([
+            dbc.Card([
+                dbc.CardImg(src="assets/images/DS4AColombiaLogo.png", class_name="w-50"),
+                dbc.CardBody(
+                    html.P("""Esta aplicación es es resultado de nuestros aprendizajes en el curso DS4A Colombia 
+                    ofrecido por Correlation One, en asocio con MinTIC""")
+                )
+            ]),
+        ]),
+    ]),
 ])
 
 #Side menu cards

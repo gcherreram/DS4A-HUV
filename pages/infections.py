@@ -36,9 +36,10 @@ content_infections2 = dbc.Card([
                 2015:{"label":"2015"},
                 2017:{"label":"2017"},
                 2019:{"label":"2019"},
-                2021:{"label":"2021"},}
+                2021:{"label":"2021"},},
+            tooltip={"placement": "bottom", "always_visible": True}
             )),
-        dbc.Row(dcc.Graph(figure=micro_map_generator("Todos", "MICROORGANISMO", 
+        dbc.Row(dcc.Graph(figure=micro_map_generator(2013, "MICROORGANISMO", 
             "PISO"), id='micro_map_figure1'
         )),
     ])
@@ -47,15 +48,16 @@ content_infections2 = dbc.Card([
 content_infections3 = dbc.Card([
     dbc.CardBody([
         html.H6("Top 20 Microorganismos por Resistencia Antibiótica", style={'textAlign': 'center', "font-weight":"bold"}),
-        dbc.Row(dcc.Slider(min=2013, max=2021, step=1, value=2013, id='micro_map_slider2',
+        dbc.Row(dcc.Slider(min=2013, max=2021, step=1, id='micro_map_slider2',
             marks={
                 2013:{"label":"2013"}, 
                 2015:{"label":"2015"},
                 2017:{"label":"2017"},
                 2019:{"label":"2019"},
-                2021:{"label":"2021"},}
+                2021:{"label":"2021"},},
+            tooltip={"placement": "bottom", "always_visible": True}
             )),
-        dbc.Row(dcc.Graph(figure=micro_map_generator("Todos", "MICROORGANISMO", 
+        dbc.Row(dcc.Graph(figure=micro_map_generator(2013, "MICROORGANISMO", 
             "RESISTENCIA"), id='micro_map_figure2')
             ,justify="center"),
     ])
@@ -77,8 +79,8 @@ layout = html.Div([
             style={'textAlign': 'center', "font-weight":"bold"}, id="subtitle")),  
             dbc.Tabs([
                 dbc.Tab(content_infections1, label="Gráficas resumen"),           
-                dbc.Tab(content_infections2, label="Tabla comparativa por piso"),
-                dbc.Tab(content_infections3, label="Tabla comparativa por resistencia")
+                dbc.Tab(content_infections2, label="Tabla comparativa por piso y año"),
+                dbc.Tab(content_infections3, label="Tabla comparativa por resistencia y año")
             ])                                    
         ])       
     ])

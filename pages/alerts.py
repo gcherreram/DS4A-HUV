@@ -37,15 +37,26 @@ content_alerts2 = dbc.Container([
     dbc.Card([
     dbc.CardBody([
         html.H6("Histórico de Alertas", style={'textAlign': 'center', "font-weight":"bold"}),
+        dbc.Row(dcc.Graph(figure=alert_heatmap_generator("Todos"), id='alert_map_figure2')
+            ,justify="center"),
+        ])
+    ])
+])
+
+content_alerts3 = dbc.Container([
+    dbc.Card([
+    dbc.CardBody([
+        html.H6("Alertas por año y mes", style={'textAlign': 'center', "font-weight":"bold"}),
         dbc.Row(dcc.Slider(min=2013, max=2021, step=1, value=2013, id='alert_map_slider',
             marks={
                 2013:{"label":"2013"}, 
                 2015:{"label":"2015"},
                 2017:{"label":"2017"},
                 2019:{"label":"2019"},
-                2021:{"label":"2021"},}
+                2021:{"label":"2021"},},
+            tooltip={"placement": "bottom", "always_visible": True}
             )),
-        dbc.Row(dcc.Graph(figure=alert_heatmap_generator("Todos"), id='alert_map_figure2')
+        dbc.Row(dcc.Graph(figure=alert_heatmap_generator(2013), id='alert_map_figure2')
             ,justify="center"),
         ])
     ])
@@ -70,6 +81,7 @@ layout = html.Div(
             dbc.Tabs([
                 dbc.Tab(content_alerts1, label="Mapa por piso"),           
                 dbc.Tab(content_alerts2, label="Histórico"),
+                dbc.Tab(content_alerts3, label="Por año y mes"),
                 ])                                    
         
         ]),

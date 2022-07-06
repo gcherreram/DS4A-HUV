@@ -162,15 +162,16 @@ def micro_map_generator(year, variable1, variable2):
         ascending=False).head(20).index
           
     if year == "Todos":
-        dfMicro1 = dfResLab[["AÑO DE TOMA DE MUESTRA", variable1, variable2, "CODIGO DE LA MUESTRA"]].groupby(by=["AÑO DE TOMA DE MUESTRA", 
+        dfMicro1 = dfResLab[dfResLab["MICROORGANISMO"].isin(top20Micro)][["AÑO DE TOMA DE MUESTRA", variable1, variable2, "CODIGO DE LA MUESTRA"]].groupby(by=["AÑO DE TOMA DE MUESTRA", 
             variable1, variable2]).nunique().reset_index()
 
     else:
-        dfMicro1 = dfResLab[dfResLab["AÑO DE TOMA DE MUESTRA"] == year][[variable1, variable2, 
+        dfMicro1 = dfResLab[dfResLab["MICROORGANISMO"].isin(top20Micro)]
+        dfMicro1 = dfMicro1[dfMicro1["AÑO DE TOMA DE MUESTRA"] == year][[variable1, variable2, 
             "CODIGO DE LA MUESTRA"]].groupby(by=[variable1, variable2]).nunique().reset_index() 
     
     micro_map = go.Figure(data=go.Heatmap(
-        x = top20Micro,
+        x = dfMicro1[variable1],
         y = dfMicro1[variable2],
         z = pd.crosstab(index=dfMicro1[variable1], columns=dfMicro1[variable2], values=dfMicro1["CODIGO DE LA MUESTRA"], 
             aggfunc="sum", dropna=False).stack(),        
@@ -228,7 +229,7 @@ def alert_heatmap_generator(year):
         )
         
     else:
-        df_alerts_unit = df_alerts[df_alerts_unit["AÑO DE TOMA DE MUESTRA"] == year][["SALA", "ALERTA", "CODIGO DE LA MUESTRA", "AÑO DE TOMA DE MUESTRA", 
+        df_alerts_unit = df_alerts[df_alerts["AÑO DE TOMA DE MUESTRA"] == year][["SALA", "ALERTA", "CODIGO DE LA MUESTRA", "AÑO DE TOMA DE MUESTRA", 
             "MES DE LA MUESTRA"]].groupby(by=["SALA", "ALERTA", "AÑO DE TOMA DE MUESTRA", 
             "MES DE LA MUESTRA"]).nunique().reset_index()
         df_alerts_unit = df_alerts_unit[df_alerts_unit["ALERTA"]==1]
@@ -239,7 +240,12 @@ def alert_heatmap_generator(year):
             z = table_alert_unit.stack(),
             x = df_alerts_unit["MES DE LA MUESTRA"],
             y = df_alerts_unit["SALA"],
-            colorscale='Reds'))   
+            colorscale='Reds'))
+
+        alert_heatmap.update_layout(
+            font = {"size":10},
+            yaxis={"categoryorder": "category descending"},
+        )   
     
     return alert_heatmap
 
