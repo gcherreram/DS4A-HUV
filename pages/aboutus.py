@@ -18,7 +18,7 @@ content_about1=  dbc.Container([
         dbc.Col([
             dbc.Row([
                 dbc.Card([
-                    dbc.CardImg(src="assets/images/PortraitPlaceholder.png"),
+                    dbc.CardImg(src="assets/images/JohnBolaños.jpeg"),
                     dbc.CardBody("John Bolaños", style={'textAlign': 'center', "font-weight":"bold"}),
                     ], className="w-75 mb-3"),
                 ], justify="center"),
@@ -32,7 +32,7 @@ content_about1=  dbc.Container([
         dbc.Col([
             dbc.Row([
                 dbc.Card([
-                    dbc.CardImg(src="assets/images/PortraitPlaceholder.png"),
+                    dbc.CardImg(src="assets/images/CarlosChoconta.png"),
                     dbc.CardBody("Carlos Chocontá", style={'textAlign': 'center', "font-weight":"bold"}),
                     ], className="w-75 mb-3"),
                 ], justify="center"),
