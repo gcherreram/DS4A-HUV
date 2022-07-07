@@ -55,7 +55,7 @@ list_dicts = {"dic_rename_micro":dic_rename_micro,
         "dic_family_microorganism":dic_family_microorganism,
         "dic_order_microorganism":dic_order_microorganism,
         "dic_gram_microorganism":dic_gram_microorganism,
-        "dic_shape_microorganism":dic_gram_microorganism,
+        "dic_shape_microorganism":dic_shape_microorganism,
         "dic_rename_antibiotic":dic_rename_antibiotic,
         "dic_family_antibiotic":dic_family_antibiotic,
         "dic_type_antibiotic":dic_family_antibiotic
