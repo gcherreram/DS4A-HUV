@@ -24,7 +24,7 @@ earlyalerts_card = sidecard("Modelo", "Modelo de Alertas Tempranas", "/modelaler
 content_alerts1 = dbc.Container([
     dbc.Card([
     dbc.CardBody([
-        html.H4("Alertas por piso", style={'textAlign': 'center', "font-weight":"bold"}),
+        html.H6("Alertas por piso", style={'textAlign': 'center', "font-weight":"bold"}),
         dbc.Row(dcc.Dropdown(["Primer Piso", "Segundo Piso", "Tercer Piso", "Cuarto Piso", "Quinto Piso", "Sexto Piso"], 
             value='Perimer Piso', id="alert_map_dropdown")),
         dbc.Row(dcc.Graph(figure=alert_in_map("Primer Piso"), id='alert_map_figure1')
@@ -76,7 +76,7 @@ layout = html.Div(
         ], width=2,
         ),
         dbc.Col([
-            dbc.Row(html.H3("Alertas por IAAS en el HUV", 
+            dbc.Row(html.H4("Alertas por IAAS en el HUV", 
             style={'textAlign': 'center', "font-weight":"bold"}, id="subtitle")),  
             dbc.Tabs([
                 dbc.Tab(content_alerts1, label="Mapa por piso"),           

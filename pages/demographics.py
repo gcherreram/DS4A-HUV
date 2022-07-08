@@ -50,7 +50,7 @@ layout = html.Div([
             dbc.Row(earlyalerts_card),
             ], width=2),
         dbc.Col([
-            dbc.Row(html.H3("Caracterización de los pacientes afectados por IAAS en el HUV", 
+            dbc.Row(html.H4("Caracterización de los pacientes afectados por IAAS en el HUV", 
             style={'textAlign': 'center', "font-weight":"bold"}, id="subtitle")),
             dbc.Row([
                 dbc.Col(dbc.Row(content_demo1, justify="between"), width=2, align="center"),

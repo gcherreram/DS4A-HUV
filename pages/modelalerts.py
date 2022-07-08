@@ -19,7 +19,29 @@ alerts_card = sidecard("Alertas", "Histórico de Alertas por IAAS", "/alerts")
 earlyalerts_card = sidecard("Modelo", "Modelo de Alertas Tempranas", "/modelalerts")
 
 #Generate page content
-content_alerts = dbc.Container([])
+content_model = dbc.Container([
+    dbc.Row(html.H4("Modelos Predictivos", style={'textAlign': 'center', "font-weight":"bold"})),
+    dbc.Row([
+        dbc.Carousel(
+            items = [
+                {
+                    "key": "1",
+                    "src": "/assets/images/Decision_tree_model1.png",
+                    
+                },
+                {
+                    "key": "2",
+                    "src": "/assets/images/Decision_tree_model2.png",
+
+                },                ],
+                controls=False,
+                indicators=False,
+                interval=3000,
+                ride="carousel",
+                variant = "dark",
+            ),
+        ]),
+])
 
 #Define layout
 layout = html.Div(
@@ -34,7 +56,7 @@ layout = html.Div(
             dbc.Row(earlyalerts_card),
         ], width=2,
         ),
-        dbc.Col(content_alerts),
+        dbc.Col(content_model),
     ],
     align="start",
     justify="between"

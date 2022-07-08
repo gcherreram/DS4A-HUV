@@ -13,7 +13,7 @@ register_page(__name__, path="/aboutus", name="Equipo 237", title="Sobre Nosotro
 
 #Define content
 content_about1=  dbc.Container([
-    dbc.Row(html.H3("Equipo 237",style={'textAlign': 'center', "font-weight":"bold"})),
+    dbc.Row(html.H4("Equipo 237",style={'textAlign': 'center', "font-weight":"bold"})),
     dbc.Row([
         dbc.Col([
             dbc.Row([
@@ -75,7 +75,7 @@ content_about1=  dbc.Container([
 ])
 
 content_about2=dbc.Container([
-    dbc.Row(html.H3("Agradecimientos", style={'textAlign': 'center', "font-weight":"bold"})),
+    dbc.Row(html.H4("Agradecimientos", style={'textAlign': 'center', "font-weight":"bold"})),
     dbc.Row([
         dbc.Carousel(
             items = [

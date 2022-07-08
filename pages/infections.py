@@ -75,7 +75,7 @@ layout = html.Div([
             dbc.Row(earlyalerts_card),
             ], width=2),
         dbc.Col([
-            dbc.Row(html.H3("Caracterización de las IAAS en el HUV", 
+            dbc.Row(html.H4("Caracterización de las IAAS en el HUV", 
             style={'textAlign': 'center', "font-weight":"bold"}, id="subtitle")),  
             dbc.Tabs([
                 dbc.Tab(content_infections1, label="Gráficas resumen"),           

@@ -14,7 +14,7 @@ register_page(__name__, path="/", name="Inicio", title="Dashboard para el monito
 #Define content
 content_home=  dbc.Container([
 
-    dbc.Row(html.H3("Infecciones por Atención en el Salud Hospital Universitario Evaristo García E.S.E.", 
+    dbc.Row(html.H4("Herramienta para Monitoreo de IAAS en el Hospital Universitario Evaristo García E.S.E.", 
         style={'textAlign': 'center', "font-weight":"bold"})),
     dbc.Row([
         dbc.Col([
@@ -32,7 +32,7 @@ content_home=  dbc.Container([
                 dbc.CardImg(),
                 dbc.CardHeader("Sobre este dashboard", style={'textAlign': 'center', "font-weight":"bold"}),
                 dbc.CardBody(
-                        html.P("""Este dashboard presenta una caracterización de la IAAs en el HUV del valle entre 2013 (septiembre) y 2021.
+                        html.P("""Este dashboard presenta una caracterización de la IAAs en el HUV entre 2013 (septiembre) y 2021.
                         Fue desarrollado por el Equipo 237 con la intencón de ofrecer una herramienta para la toma de decisiones en el HUV"""),
                 ),
             ]),
@@ -51,7 +51,7 @@ content_home=  dbc.Container([
             dbc.Card([
                 dbc.CardImg(src="assets/images/DS4AColombiaLogo.png", class_name="w-50"),
                 dbc.CardBody(
-                    html.P("""Esta aplicación es es resultado de nuestros aprendizajes en el curso DS4A Colombia 
+                    html.P("""Esta aplicación es el resultado de nuestros aprendizajes en el curso DS4A Colombia 
                     ofrecido por Correlation One, en asocio con MinTIC""", style={'textAlign': 'center'})
                 )
             ]),
