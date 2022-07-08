@@ -98,7 +98,7 @@ content_about2=dbc.Container([
                 ],
                 controls=False,
                 indicators=False,
-                interval=1000,
+                interval=5000,
                 ride="carousel",
                 variant = "dark",
             ),
