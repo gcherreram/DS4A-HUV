@@ -36,7 +36,7 @@ content_model = dbc.Container([
                 },                ],
                 controls=False,
                 indicators=False,
-                interval=3000,
+                interval=1000,
                 ride="carousel",
                 variant = "dark",
             ),
